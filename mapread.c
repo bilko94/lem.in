@@ -6,7 +6,7 @@
 /*   By: solivari <solivari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 14:59:23 by solivari          #+#    #+#             */
-/*   Updated: 2019/09/10 17:35:41 by solivari         ###   ########.fr       */
+/*   Updated: 2019/09/11 17:29:45 by solivari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ t_rd	*create_node(char *line)
 	if (!(node = (t_rd *)malloc(sizeof(t_rd))))
 		return (NULL);
 	node->name = NULL;
-	node->x = NULL;
-	node->y = NULL;
+	node->x = 0;
+	node->y = 0;
 	node->line = line;
 	node->dx = 0;
 	node->next = NULL;
@@ -41,19 +41,28 @@ void	addnode(t_rd **rd, char *line)
 	node->prev = cursor;
 }
 
-void	executecmd(char *str, t_rd **rd)
+void	executecmd(char **str, char c)
 {
+	int i;
 	
+	i = 0;
+	if (c == '-')
+		createlink(str);
+	else if (c == ' ')
+	{
+		
+		createroom(str);
+	}
 }
 
-void	split(char *av, t_rd **rd)
+void	split(char *av, char c)
 {
 	int		j;
 	char	**split;
 
 	j = 0;
-	split = ft_strsplit(av, ' ');
-	executecmd(split, rd);
+	split = ft_strsplit(av, c);
+	executecmd(split, c);
 	while (split[j])
 		free(split[j++]);
 	free(split);
@@ -68,10 +77,11 @@ void	readmap(t_rd **rd)
 	cursor = rd;
 	while (cursor->next)
 	{
-		if (testcase(cursor))
+		if (testcase(cursor->line) == 0)
+			EREXIT ;
+		cursor = cursor->next;
 	}
 }
-
 
 t_rd	*initialize(void)
 {
@@ -80,29 +90,46 @@ t_rd	*initialize(void)
 	if (!(new = (t_rd *)malloc(sizeof(t_rd) + 1)))
 		return (NULL);
 	new->name = NULL;
-	new->x = NULL;
-	new->y = NULL;
+	new->x = 0;
+	new->y = 0;
 	new->dx = 0;
 	new->next = NULL;
 	new->prev = NULL;
-	new->line = malloc(1);
+	if (!(new->line = malloc(1)))
+		return (NULL);
 	return (new);
 }
 
-void	checkmap(void)
+void	checkmap(void) //main
 {
     int		ret;
     int		fd;
     int		j;
+	int		ants;
 	t_rd	**rd;
+	t_rd	*cursor;
+	t_room	**roomlist;
 
 	rd = initialize();
+	roomlist = initializeroom();
 	ret = 0;
 	fd = 0;
 	j = 1;
-	if (!((*rd)->line = malloc(1)))
-		return (NULL);
 	while (ret = get_next_line(fd, &(*rd)->line) > 0)
 		addnode(&rd, (*rd)->line);
 	readmap(&rd);
+	cursor = rd;
+	ants = ft_atoi(cursor->line);
+	cursor = cursor->next;
+	while (cursor->next)
+	{
+		if (strcmp(cursor->line, "##start") == 0)
+			addstartroom(&roomlist, cursor->next->line);
+		else if (strcmp(cursor->line, "##end") == 0)
+			addendroom(&roomlist, cursor->next->line);
+		else if (ft_arraylen(ft_strsplit(cursor->line, " ")) == 3)
+			addroom(&roomlist, cursor->line);
+		else if (ft_arraylen(ft_strsplit(cursor->line, "-")) == 2)
+			addlink(&roomlist, ft_strsplit(cursor->line, '-'));
+	}
 }
