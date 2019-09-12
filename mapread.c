@@ -6,7 +6,7 @@
 /*   By: solivari <solivari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 14:59:23 by solivari          #+#    #+#             */
-/*   Updated: 2019/09/11 17:29:45 by solivari         ###   ########.fr       */
+/*   Updated: 2019/09/12 15:44:44 by solivari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,33 +39,7 @@ void	addnode(t_rd **rd, char *line)
 		cursor = cursor->next;
 	cursor->next = node;
 	node->prev = cursor;
-}
-
-void	executecmd(char **str, char c)
-{
-	int i;
-	
-	i = 0;
-	if (c == '-')
-		createlink(str);
-	else if (c == ' ')
-	{
-		
-		createroom(str);
-	}
-}
-
-void	split(char *av, char c)
-{
-	int		j;
-	char	**split;
-
-	j = 0;
-	split = ft_strsplit(av, c);
-	executecmd(split, c);
-	while (split[j])
-		free(split[j++]);
-	free(split);
+// 	printf("%s\n", line);
 }
 
 void	readmap(t_rd **rd)
@@ -74,7 +48,7 @@ void	readmap(t_rd **rd)
 	t_rd	*cursor;
 	
 	i = 0;
-	cursor = rd;
+	cursor = (*rd);
 	while (cursor->next)
 	{
 		if (testcase(cursor->line) == 0)
@@ -83,7 +57,7 @@ void	readmap(t_rd **rd)
 	}
 }
 
-t_rd	*initialize(void)
+t_rd	*initialize(t_rd **rd)
 {
 	t_rd	*new;
 
@@ -97,7 +71,8 @@ t_rd	*initialize(void)
 	new->prev = NULL;
 	if (!(new->line = malloc(1)))
 		return (NULL);
-	return (new);
+	(*rd) = new;
+	return (*rd);
 }
 
 void	checkmap(void) //main
@@ -105,31 +80,62 @@ void	checkmap(void) //main
     int		ret;
     int		fd;
     int		j;
-	int		ants;
-	t_rd	**rd;
+	t_rd	*rd;
 	t_rd	*cursor;
-	t_room	**roomlist;
+	t_room	*roomlist;
 
-	rd = initialize();
-	roomlist = initializeroom();
+	rd = initialize(&rd);
+	cursor = rd;
+	roomlist = createhead(&roomlist);
 	ret = 0;
 	fd = 0;
 	j = 1;
-	while (ret = get_next_line(fd, &(*rd)->line) > 0)
-		addnode(&rd, (*rd)->line);
-	readmap(&rd);
-	cursor = rd;
+	while ((ret = get_next_line(fd, &cursor->line)) > 0)
+	{
+		// printf("\t\t%s\n", cursor->line);
+		addnode(&rd, cursor->line);
+	}
+	printstack(&rd);
+	map(&rd, &roomlist);
+}	
+
+void	map(t_rd **rd, t_room **roomlist)
+{
+	t_rd	*cursor;
+	int		ants;
+	char	**str;
+	
+	cursor = (*rd);
 	ants = ft_atoi(cursor->line);
+	printf("ants = %d\n", ants);
 	cursor = cursor->next;
+	printf("here\n");
 	while (cursor->next)
 	{
-		if (strcmp(cursor->line, "##start") == 0)
-			addstartroom(&roomlist, cursor->next->line);
-		else if (strcmp(cursor->line, "##end") == 0)
-			addendroom(&roomlist, cursor->next->line);
-		else if (ft_arraylen(ft_strsplit(cursor->line, " ")) == 3)
-			addroom(&roomlist, cursor->line);
-		else if (ft_arraylen(ft_strsplit(cursor->line, "-")) == 2)
-			addlink(&roomlist, ft_strsplit(cursor->line, '-'));
+		if (ft_strcmp(cursor->line, "##start") == 0)
+		{
+			printf("here1\n");
+			cursor = cursor->next;
+			addstartroom(roomlist, cursor->line);
+		}
+		else if (ft_strcmp(cursor->line, "##end") == 0)
+		{
+			printf("here2\n");
+			cursor = cursor->next;
+			addendroom(roomlist, cursor->line);
+		}
+		else if (ft_arraylen(ft_strsplit(cursor->line, ' ')) == 3 && \
+		((str = ft_strsplit(cursor->line, ' ')) && (ft_strcmp(str[0], "#") != 0 || ft_strcmp(str[0], "##"))))
+		{
+			printf("here2\n");
+			addroom(roomlist, cursor->line);
+		}
+		else if (ft_arraylen(ft_strsplit(cursor->line, '-')) == 2)
+		{
+			printf("here2\n");
+			addlink(roomlist, ft_strsplit(cursor->line, '-'));
+		}
+		printf("cycle\n");
+		cursor = cursor->next;
 	}
 }

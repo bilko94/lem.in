@@ -6,13 +6,14 @@
 /*   By: solivari <solivari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 14:17:38 by solivari          #+#    #+#             */
-/*   Updated: 2019/09/10 16:04:03 by solivari         ###   ########.fr       */
+/*   Updated: 2019/09/12 12:32:40 by solivari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
 
-int     main(int argc, char **argv)
+int     main(void)
 {
-    
+    checkmap();
+	return (0);
 }

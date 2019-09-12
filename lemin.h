@@ -6,7 +6,7 @@
 /*   By: solivari <solivari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 14:17:55 by solivari          #+#    #+#             */
-/*   Updated: 2019/09/11 16:30:29 by solivari         ###   ########.fr       */
+/*   Updated: 2019/09/12 15:26:48 by solivari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef struct		s_room
 	int				end;
 	char			*name;
 	int				links;
-	t_room			**connected; // = (t_room**)malloc(sizeof(t_room*) * nb of rooms + 1);
+	struct s_room	**connected; // = (t_room**)malloc(sizeof(t_room*) * nb of rooms + 1);
 	struct s_room	*next;
 	struct s_room	*prev;
 }					t_room;
@@ -56,6 +56,28 @@ typedef struct		s_bd
 	struct s_bd		*next;
 	struct s_bd		*prev;
 }					t_bd;
+
+// t_room	*startroom(char *str);
+t_rd	*create_node(char *line);
+void	addnode(t_rd **rd, char *line);
+void	readmap(t_rd **rd);
+t_rd	*initialize(t_rd **rd);
+void	checkmap(void);
+void	addlink(t_room **roomlist, char **str);
+t_room	*findroom(t_room **roomlist, char *str);
+t_room	*room(char *str);
+void	addendroom(t_room **roomlist, char *line);
+void	addstartroom(t_room **roomlist, char *line);
+void	addroom(t_room **roomlist, char *line);
+t_room	*initializeroom(void);
+// void	createroom(char **str);
+int		ft_arraylen(char **str);
+int		testcase(char	*str);
+void	err(void);
+t_room	*createhead(t_room **roomlist);
+void	map(t_rd **rd, t_room **roomlist);
+int		ft_list_size(t_room *stack);
+void	printstack(t_rd **rd);
 
 
 #endif

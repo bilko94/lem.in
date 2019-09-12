@@ -6,13 +6,15 @@
 /*   By: solivari <solivari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 13:34:28 by solivari          #+#    #+#             */
-/*   Updated: 2019/09/11 13:40:44 by solivari         ###   ########.fr       */
+/*   Updated: 2019/09/12 14:29:06 by solivari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "lemin.h"
+
 int		testcase(char	*str)
 {
-	if (ft_strcmp(str, " ") == 0 || ft_strcmp(str, ' ') == 0)
+	if (ft_strcmp(str, "") == 0)
 		return (1);
 	return (0);
 }
