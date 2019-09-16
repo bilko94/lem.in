@@ -1,47 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   extrafunctions.c                                   :+:      :+:    :+:   */
+/*   build_hub.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: solivari <solivari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/11 16:43:01 by solivari          #+#    #+#             */
-/*   Updated: 2019/09/12 15:26:38 by solivari         ###   ########.fr       */
+/*   Created: 2019/09/16 17:27:09 by solivari          #+#    #+#             */
+/*   Updated: 2019/09/16 17:35:42 by solivari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
 
-int		ft_arraylen(char **str)
+t_hub	*build_hub(t_rd **data)
 {
-	int	i;
+	t_hub	*hub;
 
-	i = 0;
-	while (str[i++] != '\0');
-	return (i);
+	hub = init_hub();
+	read_data(hub, data);
+	
 }
 
-int		ft_list_size(t_room *roomlist)
+void	*init_hub(void)
 {
-	int	i;
-
-	i = -1;
-	while (roomlist)
-	{
-		i++;
-		roomlist = roomlist->next;
-	}
-	return (i);
+	t_hub	*new;
+	
+	if (!(new = (t_hub*)malloc(sizeof(t_hub))))
+		return (false);
+	new->end = NULL;
+	new->start = NULL;
+	new->linear = NULL;
+	new->links = NULL;
+	new->room_count = 0;
+	return (new);
 }
 
-void	printstack(t_rd **rd)
+void	read_data(t_hub *hub, t_rd **data)
 {
-	t_rd	*cursor;
-
-	cursor = (*rd);
-	while (cursor->next)
-	{
-		printf("\t\t%s\n", cursor->line);
-		cursor = cursor->next;
-	}
+	t_rd	*current;
+	
 }
