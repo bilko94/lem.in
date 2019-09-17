@@ -6,7 +6,11 @@
 /*   By: solivari <solivari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 14:59:23 by solivari          #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2019/09/17 09:34:42 by solivari         ###   ########.fr       */
+=======
 /*   Updated: 2019/09/16 17:46:25 by solivari         ###   ########.fr       */
+>>>>>>> e3204dff0a27cb77af5ffb01a6c8607a01b7ef2c
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +45,32 @@ void	printrooms(t_room *roomlist)
 
 int		line_type(char *line)
 {
+<<<<<<< HEAD
+	char	**split;
+	char	**split1;
+	int		count;
+	int		count1;
+
+	split = ft_strsplit(line, '-');
+	count = ft_arraylen(split);
+	split1 = ft_strsplit(line, " ");
+	count1 = ft_arraylen(split1);
+	if (ft_isdigit(line) && count == 1)
+		return (1);
+	if (line[0] == '#' && line[1] == '#')
+		return (2);
+	if (line[0] == '#' && line[1] != '#')
+		return (3);
+	if (count1 == 3)
+		return (4);
+	if (count == 2)
+		return (5);
+	free(split);
+	free(split1);
+	return (6);
+=======
 	if ()
+>>>>>>> e3204dff0a27cb77af5ffb01a6c8607a01b7ef2c
 }
 
 void	map(t_hub *hub, t_rd **data)
@@ -54,7 +83,12 @@ void	map(t_hub *hub, t_rd **data)
 	while (current)
 	{
 		ref = line_type(current->line);
+<<<<<<< HEAD
+		if (ref == 1)
+			
+=======
 		if ()
+>>>>>>> e3204dff0a27cb77af5ffb01a6c8607a01b7ef2c
 	}
 	// t_rd	*current;
 	// int		ants;
