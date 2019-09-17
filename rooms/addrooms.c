@@ -6,11 +6,11 @@
 /*   By: solivari <solivari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 14:53:53 by solivari          #+#    #+#             */
-/*   Updated: 2019/09/17 16:01:53 by solivari         ###   ########.fr       */
+/*   Updated: 2019/09/17 18:03:58 by solivari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lemin.h"
+#include "../lemin.h"
 
 void	add_empty_room(t_hub **hub, char *line, int identifier)
 {

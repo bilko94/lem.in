@@ -6,11 +6,11 @@
 /*   By: solivari <solivari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 17:27:09 by solivari          #+#    #+#             */
-/*   Updated: 2019/09/17 17:50:31 by solivari         ###   ########.fr       */
+/*   Updated: 2019/09/17 18:04:15 by solivari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lemin.h"
+#include "../lemin.h"
 
 t_hub	*build_hub(t_rd **data)
 {

@@ -6,11 +6,11 @@
 /*   By: solivari <solivari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 16:37:17 by solivari          #+#    #+#             */
-/*   Updated: 2019/09/16 16:37:31 by solivari         ###   ########.fr       */
+/*   Updated: 2019/09/17 18:03:18 by solivari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lemin.h"
+#include "../lemin.h"
 
 int		countrooms(void)
 {

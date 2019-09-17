@@ -6,11 +6,11 @@
 /*   By: solivari <solivari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 16:38:20 by solivari          #+#    #+#             */
-/*   Updated: 2019/09/17 16:38:27 by solivari         ###   ########.fr       */
+/*   Updated: 2019/09/17 18:04:02 by solivari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lemin.h"
+#include "../lemin.h"
 
 t_room	*find_room(t_hub **hub, char *str)
 {

@@ -6,11 +6,11 @@
 /*   By: solivari <solivari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 15:56:08 by solivari          #+#    #+#             */
-/*   Updated: 2019/09/17 17:30:20 by solivari         ###   ########.fr       */
+/*   Updated: 2019/09/17 18:02:11 by solivari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lemin.h"
+#include "../lemin.h"
 
 t_link	*set_link(t_room *to, t_room *from)
 {

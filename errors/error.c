@@ -6,11 +6,11 @@
 /*   By: solivari <solivari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 15:28:12 by solivari          #+#    #+#             */
-/*   Updated: 2019/09/17 17:45:12 by solivari         ###   ########.fr       */
+/*   Updated: 2019/09/17 18:01:44 by solivari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lemin.h"
+#include "../lemin.h"
 
 void	err(void)
 {

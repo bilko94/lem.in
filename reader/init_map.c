@@ -6,11 +6,11 @@
 /*   By: solivari <solivari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 16:24:35 by solivari          #+#    #+#             */
-/*   Updated: 2019/09/16 17:21:41 by solivari         ###   ########.fr       */
+/*   Updated: 2019/09/17 18:02:35 by solivari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lemin.h"
+#include "../lemin.h"
 
 // t_rd	*create_rd_node(char *line)
 // {
