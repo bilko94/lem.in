@@ -6,7 +6,7 @@
 /*   By: solivari <solivari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 17:27:09 by solivari          #+#    #+#             */
-/*   Updated: 2019/09/16 17:35:42 by solivari         ###   ########.fr       */
+/*   Updated: 2019/09/17 17:50:31 by solivari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,87 @@ void	*init_hub(void)
 	new->linear = NULL;
 	new->links = NULL;
 	new->room_count = 0;
+	new->ant_count = 0;
+	new->path_count = 0;
 	return (new);
+}
+
+int		check_ref(char *line)
+{
+	if (ft_isdigit(line))
+		return (1);
+	else if (line[0] == '#' && line[1] == '#')
+		return (2);
+	else if (line[0] == '#' && line[1] != '#')
+		return (3);
+	else if (ft_wordcount(line, ' ') == 3)
+		return (4);
+	else if (ft_wordcount(line, '-') == 2)
+		return (5);
+	return (6);
 }
 
 void	read_data(t_hub *hub, t_rd **data)
 {
 	t_rd	*current;
-	
+	int		ref;
+
+	current = (*data);
+	while (current)
+	{
+		ref = check_ref(current->line);
+		add_data(&hub, ref, current->line);
+		if (ft_strcmp(current->line, "##start") == 0)
+		{
+			current = current->next;
+			add_start_data(hub, current->line);
+		}
+		else if (ft_strcmp(current->line, "##end") == 0)
+		{
+			current = current->next;
+			add_end_data(hub, current->line);
+		}
+		current = current->next;
+	}
+}
+
+void	add_data(t_hub **hub, int ref, char *line)
+{
+	if (ref == 1)
+	{
+		check_ants(line);
+		(*hub)->ant_count = ft_atoi(line);
+	}
+	if (ref == 2)
+	{
+		if (ft_strcmp(line, "##start") == 0)
+		{
+			add_empty_room(hub, line, START);
+			(*hub)->room_count++;
+		}
+		else if (ft_strcmp(line, "##end") == 0)
+		{
+			add_empty_room(hub, line, END);
+			(*hub)->room_count++;
+		}
+		return ;
+	}
+	if (ref == 3)
+		return ;
+	if (ref == 4)
+	{
+		addroom(hub, line);
+		(*hub)->room_count++;
+	}
+	if (ref == 5)
+	{
+		check_link(hub, line);
+		room_link(*hub, line);
+	}
+	if (ref == 6)
+	{
+		check_line(hub, line);
+		return ;
+	}
+	return ;
 }

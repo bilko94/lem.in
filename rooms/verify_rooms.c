@@ -1,36 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mapread.c                                          :+:      :+:    :+:   */
+/*   verify_rooms.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: solivari <solivari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/10 14:59:23 by solivari          #+#    #+#             */
-/*   Updated: 2019/09/17 17:57:23 by solivari         ###   ########.fr       */
+/*   Created: 2019/09/17 17:36:13 by solivari          #+#    #+#             */
+/*   Updated: 2019/09/17 17:40:36 by solivari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lemin.h"
+#include "../lemin.h"
 
-void	start_map(void) //main
+void	check_room(t_hub **hub, char *line)
 {
-	t_rd	*data;
-	t_hub	*hub;
+	char	**str;
 
-	data = NULL;
-	read_in(&data);
-	hub = build_hub(&data);
-
+	str = ft_stsplit(line, " ");
+	if (str[0] == 'L' || str[0] == 'l')
+		room_error();
+	if (str[0] == '#')
+		room_error();
+	if (ft_wordcount(line, " ") != 3)
+		room_error();
 }
 
-void	printrooms(t_room *roomlist)
+void	room_error(void)
 {
-	t_room	*cursor;
-
-	cursor = roomlist;
-	while (cursor)
-	{
-		printf("\t\t%s\n", cursor->name);
-		cursor = cursor->next;
-	}
+	ft_putendl_fd(RED "Error room name invalid" RESET, 2);
+	exit (1);
 }

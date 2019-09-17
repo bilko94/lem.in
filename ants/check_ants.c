@@ -1,36 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mapread.c                                          :+:      :+:    :+:   */
+/*   check_ants.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: solivari <solivari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/10 14:59:23 by solivari          #+#    #+#             */
-/*   Updated: 2019/09/17 17:57:23 by solivari         ###   ########.fr       */
+/*   Created: 2019/09/17 15:08:23 by solivari          #+#    #+#             */
+/*   Updated: 2019/09/17 15:15:15 by solivari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lemin.h"
+#include "../lemin.h"
 
-void	start_map(void) //main
+void	check_ants(char *line)
 {
-	t_rd	*data;
-	t_hub	*hub;
-
-	data = NULL;
-	read_in(&data);
-	hub = build_hub(&data);
-
-}
-
-void	printrooms(t_room *roomlist)
-{
-	t_room	*cursor;
-
-	cursor = roomlist;
-	while (cursor)
-	{
-		printf("\t\t%s\n", cursor->name);
-		cursor = cursor->next;
-	}
+	if (ft_atol(line) > INT32_MAX)
+		EREXIT ;
+	else if (ft_atoi(line) < 0)
+		EREXIT ;
 }

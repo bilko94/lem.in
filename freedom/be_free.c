@@ -1,36 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mapread.c                                          :+:      :+:    :+:   */
+/*   be_free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: solivari <solivari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/10 14:59:23 by solivari          #+#    #+#             */
-/*   Updated: 2019/09/17 17:57:23 by solivari         ###   ########.fr       */
+/*   Created: 2019/09/17 16:47:43 by solivari          #+#    #+#             */
+/*   Updated: 2019/09/17 16:49:30 by solivari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lemin.h"
+#include "../lemin.h"
 
-void	start_map(void) //main
+void	free_array(char **str)
 {
-	t_rd	*data;
-	t_hub	*hub;
+	int	i;
 
-	data = NULL;
-	read_in(&data);
-	hub = build_hub(&data);
-
-}
-
-void	printrooms(t_room *roomlist)
-{
-	t_room	*cursor;
-
-	cursor = roomlist;
-	while (cursor)
-	{
-		printf("\t\t%s\n", cursor->name);
-		cursor = cursor->next;
-	}
+	i = 0;
+	while (str[i])
+		free(str[i++]);
+	free(*str);
 }

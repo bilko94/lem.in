@@ -6,25 +6,13 @@
 /*   By: solivari <solivari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 15:56:08 by solivari          #+#    #+#             */
-/*   Updated: 2019/09/16 15:57:21 by solivari         ###   ########.fr       */
+/*   Updated: 2019/09/17 17:30:20 by solivari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
 
-t_link	*init_link(void)
-{
-	t_link	*new;
-
-	if (!(new = malloc(sizeof(t_link))))
-		return (NULL);
-	new->to = NULL;
-	new->from = NULL;
-	new->next = NULL;
-	return (new);
-}
-
-t_link	*set_link(t_room *from, t_room *to)
+t_link	*set_link(t_room *to, t_room *from)
 {
 	t_link	*new;
 
@@ -49,4 +37,17 @@ void	addlink(t_link **list, t_link *new)
 			link = link->next;
 		link->next = new;
 	}
+}
+
+void	room_link(t_hub *hub, char *line)
+{
+	t_room	*to;
+	t_room	*from;
+	char	**str;
+
+	str = ft_strsplit(line, '-');
+	to = find_room(&hub, str[0]);
+	from = find_room(&hub, str[1]);
+	addlink(&hub->links, set_link(to, from));
+	free_array(str);
 }

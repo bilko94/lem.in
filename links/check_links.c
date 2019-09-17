@@ -1,36 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mapread.c                                          :+:      :+:    :+:   */
+/*   check_links.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: solivari <solivari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/10 14:59:23 by solivari          #+#    #+#             */
-/*   Updated: 2019/09/17 17:57:23 by solivari         ###   ########.fr       */
+/*   Created: 2019/09/17 17:15:52 by solivari          #+#    #+#             */
+/*   Updated: 2019/09/17 17:30:18 by solivari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lemin.h"
+#include "../lemin.h"
 
-void	start_map(void) //main
+void	check_link(t_hub **hub, char *line)
 {
-	t_rd	*data;
-	t_hub	*hub;
+	char	**str;
 
-	data = NULL;
-	read_in(&data);
-	hub = build_hub(&data);
-
+	str = ft_strsplit(line, '-');
+	if (strcmp(str[0], str[1]) == 0)
+		link_error();
+	if (find_room(hub, str[0]) == NULL || find_room(hub, str[1]) == NULL)
+		link_error();
+	free_array(str);
 }
 
-void	printrooms(t_room *roomlist)
+void	link_error(void)
 {
-	t_room	*cursor;
-
-	cursor = roomlist;
-	while (cursor)
-	{
-		printf("\t\t%s\n", cursor->name);
-		cursor = cursor->next;
-	}
+	ft_putendl_fd(RED "Error invalid room links\n" RESET, 2);
+	exit (1);
 }

@@ -6,7 +6,7 @@
 /*   By: solivari <solivari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 15:28:12 by solivari          #+#    #+#             */
-/*   Updated: 2019/09/10 16:04:24 by solivari         ###   ########.fr       */
+/*   Updated: 2019/09/17 17:45:12 by solivari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,14 @@
 
 void	err(void)
 {
-	ft_putendl_fd("ERROR\n", 2);
+	ft_putendl_fd(RED "Error, non-compliant or empty line\n" RESET, 2);
 	exit(1);
+}
+
+void	check_line(t_hub **hub, char *line)
+{
+	if (!line)
+		err();
+	if (line == '\0')
+		err();
 }

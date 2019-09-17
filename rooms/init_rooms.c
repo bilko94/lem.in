@@ -6,7 +6,7 @@
 /*   By: solivari <solivari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 16:33:31 by solivari          #+#    #+#             */
-/*   Updated: 2019/09/16 17:23:27 by solivari         ###   ########.fr       */
+/*   Updated: 2019/09/17 15:40:41 by solivari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,6 @@ t_room	*set_room(char *str)
 	room->name = str1[0];
 	room->x = ft_atoi(str1[1]);
 	room->y = ft_atoi(str1[2]);
+	free(str1);
 	return (room);
 }
