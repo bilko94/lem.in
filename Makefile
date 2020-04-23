@@ -12,56 +12,25 @@ NAME_CH = checker
 NAME_PS = push_swap
 CC = gcc
 FLAGS = -Wall -Werror -Wextra
-SRC_DIR = ./srcs/
-INC_DIR = ./includes/
-OBJ_DIR = ./srcs/
-OPTIONS = -I$(INC_DIR) -I./libft -lft -L./libft
-HDR = ./includes/push_swap.h
 
-OBJ_CH = $(OBJ_DIR)checker.o $(OBJ_DIR)stack_ops_1.o $(OBJ_DIR)commands_1.o
-OBJ_CH += $(OBJ_DIR)commands_2.o $(OBJ_DIR)commands_3.o $(OBJ_DIR)debugging.o
-OBJ_CH += $(OBJ_DIR)error_checks_1.o $(OBJ_DIR)error_checks_2.o
-OBJ_CH += $(OBJ_DIR)validate.o $(OBJ_DIR)stack_ops_2.o $(OBJ_DIR)viz.o
-OBJ_CH += $(OBJ_DIR)args.o
+dep.a : libft.a gnl.a
+	ar rcs dep.a *.o global.h
+	# ranlib dep.a
+	rm *.o
 
-OBJ_PS = $(OBJ_DIR)push_swap.o $(OBJ_DIR)algo_1.o $(OBJ_DIR)algo_2.o
-OBJ_PS += $(OBJ_DIR)algo_helper_1.o $(OBJ_DIR)algo_helper_2.o
-OBJ_PS += $(OBJ_DIR)commands_1.o $(OBJ_DIR)commands_2.o $(OBJ_DIR)commands_3.o
-OBJ_PS += $(OBJ_DIR)stack_ops_1.o $(OBJ_DIR)stack_ops_2.o $(OBJ_DIR)validate.o
-OBJ_PS += $(OBJ_DIR)error_checks_1.o $(OBJ_DIR)error_checks_2.o $(OBJ_DIR)debugging.o
-OBJ_PS += $(OBJ_DIR)viz.o
+libft.a :
+	gcc -c ./dependencies/libft/*.c $(FLAGS)
 
-all: $(LIB) $(NAME_CH) $(NAME_PS)
+gnl.a :
+	gcc -c ./dependencies/get_next_line/get_next_line.c
 
-$(LIB): relib cleanlib
-    @echo "[$(LIB)] compiled"
+checker.a : 
+	gcc -c ./checker/*.c $(FLAGS)
+	ar rcs checker.a *.o global.h 
+	rm *.o
 
-%.o: $(SRC_DIR)%.c $(HDR)
-    @$(CC) $(FLAGS) $(OPTIONS) -c $< -o $@
-
-$(NAME_CH): $(OBJ_CH)
-    @$(CC) -o $(NAME_CH) $(FLAGS) $(OPTIONS) $(OBJ_CH) 
-    @echo "[$(NAME_CH)] compiled"
-
-$(NAME_PS): $(OBJ_PS)
-    @$(CC) -o $(NAME_PS) $(FLAGS) $(OPTIONS) $(OBJ_PS)
-    @echo "[$(NAME_PS)] compiled"
-
-clean: cleanlib
-    @/bin/rm -f $(SRC_DIR)*.o
-    @echo "Object files removed"
-
-fclean: clean fcleanlib
-    @/bin/rm -f $(NAME_CH) $(NAME_PS)
-    @echo "[$(NAME_CH)] & [$(NAME_PS)] removed"
-
-re: fclean all
-
-relib:
-    @$(MAKE) -C ./libft re
-
-cleanlib:
-    @$(MAKE) -C ./libft clean
-
-fcleanlib: cleanlib
-    @$(MAKE) -C ./libft fclean
+tester : dep.a checker.a
+	gcc testmain.c checker.a dep.a -o tester $(FLAGS)
+	rm *.a
+test : tester
+	./tester < maps/test.map
