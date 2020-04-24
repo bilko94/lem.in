@@ -10,4 +10,4 @@ re :
 	make all
 
 clean :
-	rm *.a
+	-rm *.a

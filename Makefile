@@ -3,8 +3,9 @@ all : dependencies functions
 
 re :
 	-rm *.a
-	cd depend; rm *.a
+	-cd depend; rm *.a
 	make
+
 t :
 	make re
 	./main < maps/test.map
