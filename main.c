@@ -4,7 +4,7 @@ int main(void){
 	struct raw_map *raw_map_data;
 
 	raw_map_data = reader();
-	echo_map(raw_map_data);
+	// echo_map(raw_map_data);
 	interpreter(raw_map_data);
 	return (0);
 }

@@ -16,4 +16,4 @@ int validate_instruction_set(struct head *map_head, struct raw_map *raw_data){
 	return (6);
 }
 
-void set_ants(){}
+// void set_ants(){}
