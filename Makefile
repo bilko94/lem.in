@@ -1,5 +1,5 @@
 all : dependencies functions
-	gcc main.c functions.a depend/*.a -o main
+	gcc main.c functions.a depend/*.a -o lemin
 
 re :
 	-rm *.a
@@ -8,7 +8,7 @@ re :
 
 t :
 	make re
-	./main < maps/test.map
+	./lemin < maps/test.map
 
 dependencies :
 	cd depend; make;
@@ -19,3 +19,7 @@ functions : readers
 
 readers :
 	gcc -c reader/*.c
+
+clean :
+	-rm *.a
+	-cd depend; rm *.a
