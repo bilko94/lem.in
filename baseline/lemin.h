@@ -36,19 +36,27 @@ typedef struct		s_rd
 
 typedef struct		s_room
 {
+	int				id;
 	int				x;
 	int				y;
 	int				link_count;
 	char			*name;
 	struct s_room	**links; // = (t_room**)malloc(sizeof(t_room*) * nb of rooms + 1);
 	struct s_room	*next;
-	bool			occupied;
-	bool			start;
-	bool			end;
+	int				visited;
+	int				start;
+	int				end;
 }					t_room;
 // ex. line = 5-2
 // char **connected[links] = find.room.by.name(data[1]);
 // links++;
+
+typedef struct		s_queue
+{
+	struct s_room	*node;
+	struct s_queue	*parent;
+	struct s_queue	*next;
+}					t_queue;
 
 typedef struct		s_link
 {
