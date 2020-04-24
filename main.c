@@ -5,6 +5,7 @@ int main(void){
 
 	raw_map_data = reader();
 	echo_map(raw_map_data);
+	interpreter(raw_map_data);
 	return (0);
 }
 

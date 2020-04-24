@@ -2,11 +2,11 @@
 
 struct raw_map *reader()
 {
+	int		i;
 	char	*res;
 	struct raw_map *mapData;
 	struct raw_map *temp;
 	struct raw_map *start;
-	int		i;
 
 	res = NULL;
 	temp = NULL;
@@ -29,7 +29,7 @@ struct raw_map *reader()
 struct raw_map *new_raw_map(char *c){
 	struct raw_map *new = NULL;
 
-	if ((new = (struct raw_map *)malloc(sizeof(raw_map)))){
+	if ((new = (struct raw_map *)malloc(sizeof(raw_map_struct)))){
 		new->line = c;
 		new->next = NULL;
 	}
