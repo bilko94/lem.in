@@ -1,37 +1,50 @@
 #include "../global.h"
 
-struct raw_map *reader()
-{
-	int		i;
-	char	*res;
-	struct raw_map *mapData;
-	struct raw_map *temp;
-	struct raw_map *start;
+hub *reader(){
+	hub *new = NULL;
 
-	res = NULL;
-	temp = NULL;
-	start = NULL;
-	mapData = NULL;
-	while ((i = get_next_line(0, &res))){
-		temp = new_raw_map(res);
-		if (mapData == NULL){
-			mapData = temp;
-			start = temp;
-		} else {
-			mapData->next = temp;
-			mapData = mapData->next;
+	if (!(new = hub_malloc()))
+		return (NULL);
+	if (!read_raw_data(new))
+		return (purge(new));
+	return new;
+}
+
+int read_raw_data(hub *new){
+	int i = 0;
+	char *line = NULL;
+	raw_map *temp = NULL;
+
+	while(get_next_line(0, &line)){
+		if (!(temp = raw_malloc(line))){
+			free(line);
+			return (0);
 		}
-		res = NULL;
+		attach_raw_data(new, temp);
+		line = NULL;
 	}
-	return (start);
+	return (1);
 }
 
-struct raw_map *new_raw_map(char *c){
-	struct raw_map *new = NULL;
+void attach_raw_data(hub *new, raw_map *data){
+	raw_map *temp;
 
-	if ((new = (struct raw_map *)malloc(sizeof(raw_map_struct)))){
-		new->line = c;
-		new->next = NULL;
+	temp = NULL;
+	if (!new->raw_data)
+		new->raw_data = data;
+	else {
+		temp = new->raw_data;
+		while (temp->next)
+			temp = temp->next;
+		temp->next = data;
 	}
-	return (new);
 }
+
+void display_raw_data(hub *t_hub){
+	raw_map *temp = t_hub->raw_data;
+	while(temp){
+		printf("%s\n",temp->line);
+		temp = temp->next;
+	}
+}
+

@@ -5,36 +5,49 @@
 #include "depend/get_next/get_next_line.h"
 
 // reader
-struct raw_map {
+typedef struct	raw_map {
 	char *line;
 	struct raw_map *next;
-} raw_map_struct;
-struct raw_map *reader();
-struct raw_map *new_raw_map(char *c);
-void echo_map(struct raw_map *raw_map_data);
-
+}				raw_map;
 // interpreter
-struct map {
+typedef struct	room {
 	char *name;
-	int *room;
+	int room;
 	int *links;
 	int occ;
 	int x;
 	int y;
-	struct map *next;
-};
-
-struct head {
+	struct room *next;
+}				room;
+// hub
+typedef struct	hub {
 	struct raw_map *raw_data;
-	struct map *start_map;
+	struct room *start_map;
 	int start;
 	int end;
+	int antamm;
 	int ants;
-};
-struct head *interpreter(struct raw_map *raw_map_data);
-struct head *head_malloc(struct raw_map *raw_data);
+}				hub;
+// malloc
+room		*room_malloc(void);
+hub			*hub_malloc(void);
+raw_map		*raw_malloc(char *c);
+hub 		*purge(hub *t_hub);
+// reader
+hub 		*reader();
+int			read_raw_data(hub *new);
+void 		attach_raw_data(hub *new, raw_map *data);
+void		display_raw_data(hub *t_hub);
+// constructor
+hub *constructor(void);
+void hub_debug(hub *t_hub);
 
-// instruction set
-int validate_instruction_set(struct head *map_head, struct raw_map *raw_data);
+// build rooms
+int build_rooms(hub *t_hub);
+int count_rooms(raw_map *data);
+void attach_rooms(hub *new, room *data);
+int		check_ref(char *line);
+// writer
+int room_writer(hub *t_hub);
 
 #endif
