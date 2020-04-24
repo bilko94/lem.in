@@ -2,7 +2,7 @@
 #define GLOBAL_H
 #include <stdio.h>
 #include "depend/libft/libft.h"
-#include "depend/gnl/get_next_line.h"
+#include "depend/get_next/get_next_line.h"
 
 // reader
 struct raw_map {
