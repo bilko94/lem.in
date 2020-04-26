@@ -1,4 +1,4 @@
-all : dependencies functions
+all : dependencies functions.a
 	gcc main.c functions.a depend/*.a -o lemin
 
 re :
@@ -13,18 +13,12 @@ t :
 dependencies :
 	cd depend; make;
 
-functions : readers processors jsc
+functions.a : function
 	ar rc functions.a *.o
 	-rm *.o
 
-readers :
-	gcc -c reader/*.c
-
-processors :
-	gcc -c base/*.c
-
-jsc :
-	gcc -c jsc/*.c
+function :
+	gcc -c functions/*.c
 
 clean :
 	-rm *.a

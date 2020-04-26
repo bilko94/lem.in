@@ -1,6 +1,6 @@
 #ifndef JS_H
 #define JS_H
-#include "../global.h"
+// #include "../global.h"
 #include <stdio.h>
 #include <stdlib.h>
 

@@ -12,23 +12,20 @@
 
 #include "../global.h"
 
-void		read_in(t_rd **data)
-{
+void		read_in(t_rd **data){
 	char	*line;
 
-	while (get_next_line(0, &line))
-	{
+	while (get_next_line(0, &line)){
 		add_rd_node(data, line);
 		line = NULL;
 	}
 }
 
-void		add_rd_node(t_rd **data, char *line)
-{
+void		add_rd_node(t_rd **data, char *line){
 	t_rd	*current;
 	t_rd	*new;
 
-	new = init_rd();
+	new = malloc_rd();
 	new->line = line;
 	current = (*data);
 	if (!current)
@@ -41,13 +38,13 @@ void		add_rd_node(t_rd **data, char *line)
 	}
 }
 
-t_rd	*init_rd(void)
-{
-	t_rd	*new;
+int			init_build(t_hub **hub, t_rd *data){
 
-	if (!(new = (t_rd *)malloc(sizeof(t_rd))))
-		return (false);
-	new->line = NULL;
-	new->next = NULL;
-	return (new);
+	if (((*hub) = malloc_hub())){
+		onetap((*hub), data);
+		insert((*hub), data);
+		onelink((*hub), data);
+		return 1;
+	}
+	return 0;
 }

@@ -10,7 +10,7 @@
 # define RESET "[0m"
 # include "depend/libft/libft.h"
 # include "depend/get_next/get_next_line.h"
-# include "jsc/js.h"
+// # include "jsc/js.h"
 # include <unistd.h>
 # include <string.h>
 # include <stdlib.h>
@@ -73,78 +73,94 @@ typedef struct		s_hub
 	int				path_count;
 }					t_hub;
 
-//Mapping
+// //Mapping
 
-t_hub	*build_hub(t_rd **data);
-void	add_data(t_hub *hub, int ref, char *line);
-void	add_rd_node(t_rd **data, char *line);
-void	read_data(t_hub *hub, t_rd **data);
-int		check_ref(char *line);
+// t_hub	*build_hub(t_rd **data);
+// void	add_data(t_hub *hub, int ref, char *line);
+// void	read_data(t_hub *hub, t_rd **data);
+// int		check_ref(char *line);
+// void	readmap(t_rd **rd);
+// t_hub	*init_hub(void);
+// void	start_map(void);
+// // t_rd	*create_rd_node(char *line);
+// // void	addnode(t_rd **rd);
+
+// //Rooms
+
+// t_room	*createhead(t_room **roomlist);
+// t_room	*set_room(char *str);
+// t_room	*init_room(void);
+// void	add_empty_room(t_hub *hub, char *line, int identifier);
+// void	add_start_data(t_hub *hub, char *line);
+// void	add_end_data(t_hub *hub, char *line);
+// void	addroom(t_hub *hub, char *line);
+// // void	addendroom(t_hub **hub, char *line);
+// // void	addstartroom(t_hub **hub, char *line);
+
+// //Links
+
+// t_link	*set_link(t_room *from, t_room *to);
+// void	addlink(t_link *list, t_link *new);
+// void	room_link(t_hub *hub, char *line);
+
+// //Miscellaneous
+
+// int		ft_arraylen(char **str);
+// int		testcase(char	*str);
+// int		ft_list_size(t_room *stack);
+// void	printstack(t_rd **rd);
+// void	printrooms(t_room *roomlist);
+// int		countrooms(void);
+
+// //Freedom
+
+// void	free_array(char **str);
+
+// //Errors & Verification
+
+// void	check_link(t_hub *hub, char *line);
+// void	check_room(t_hub **hub, char *line);
+// void	check_line(t_hub *hub, char *line);
+// void	check_ants(char *line);
+// void	room_error(void);
+// void	link_error(void);
+// void	err(void);
+
+// init data
 void	read_in(t_rd **data);
-void	readmap(t_rd **rd);
-t_hub	*init_hub(void);
-void	start_map(void);
-t_rd	*init_rd(void);
-// t_rd	*create_rd_node(char *line);
-// void	addnode(t_rd **rd);
-
-//Rooms
-
-t_room	*find_room(t_room *roomlist, char *str);
-t_room	*createhead(t_room **roomlist);
-t_room	*set_room(char *str);
-t_room	*init_room(void);
-void	add_empty_room(t_hub *hub, char *line, int identifier);
-void	add_start_data(t_hub *hub, char *line);
-void	add_end_data(t_hub *hub, char *line);
-void	addroom(t_hub *hub, char *line);
-// void	addendroom(t_hub **hub, char *line);
-// void	addstartroom(t_hub **hub, char *line);
-
-//Links
-
-t_link	*set_link(t_room *from, t_room *to);
-void	addlink(t_link *list, t_link *new);
-void	room_link(t_hub *hub, char *line);
-
-//Miscellaneous
-
-int		ft_arraylen(char **str);
-int		testcase(char	*str);
-int		ft_list_size(t_room *stack);
-void	printstack(t_rd **rd);
-void	printrooms(t_room *roomlist);
-int		countrooms(void);
-
-//Freedom
-
-void	free_array(char **str);
-
-//Errors & Verification
-
-void	check_link(t_hub *hub, char *line);
-void	check_room(t_hub **hub, char *line);
-void	check_line(t_hub *hub, char *line);
-void	check_ants(char *line);
-void	room_error(void);
-void	link_error(void);
-void	err(void);
+void	add_rd_node(t_rd **data, char *line);
+int		init_build(t_hub **hub, t_rd *data);
 
 
-// 1tap
+// malloc
 t_hub	*malloc_hub(void);
 t_room	*malloc_room(void);
-int		build(t_hub **hub, t_rd *data);
-int		build_rooms(t_hub *hub);
+t_link	*malloc_link(void);
+t_rd	*malloc_rd(void);
+
+// onetap
 int		onetap(t_hub *hub, t_rd *data);
-int		instruction(char *line);
 int		count_rooms(t_rd *data);
-int		populate(t_hub *hub, t_rd *data);
-int		insert(t_hub *hub, t_rd *data);
-int		write_room(t_room *start, char *line, int pos);
-int		link_rooms(t_hub *hub, char *line);
+int		build_rooms(t_hub *hub);
+int		instruction(char *line);
+
+// link
 int		onelink(t_hub *hub, t_rd *data);
 int		link_rooms(t_hub *hub, char *line);
+t_room	*find_room(t_room *roomlist, char *str);
 int		connector(t_hub *hub, int id1, int id2);
-int		link_rooms(t_hub *hub, char *line);
+
+// write
+int		insert(t_hub *hub, t_rd *data);
+int		populate(t_hub *hub, t_rd *data);
+int		write_room(t_room *start, char *line, int pos);
+
+// mappers
+void hub_echo(t_hub *hub);
+void room_echo(t_room *room);
+void mapper(t_hub *hub);
+int maxvar(t_hub *hub, char mode);
+int locate_room(int x, int y, t_hub *hub);
+void print_links(t_hub *hub);
+
 #endif
