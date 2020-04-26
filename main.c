@@ -2,7 +2,8 @@
 
 void hub_echo(t_hub *hub);
 void room_echo(t_room *room);
-void mapper(int x, int y, t_hub *hub);
+void mapper(t_hub *hub);
+int maxvar(t_hub *hub, char mode);
 int locate_room(int x, int y, t_hub *hub);
 
 int main(void){
@@ -13,7 +14,7 @@ int main(void){
 	build(&hub, test1);
 	printf("done !\n");
 	hub_echo(hub);
-	mapper(24, 11, hub);
+	mapper(hub);
 	return (0);
 }
 
@@ -39,9 +40,11 @@ void room_echo(t_room *room){
 		printf(" path");
 }
 
-void mapper(int x, int y, t_hub *hub){
+void mapper(t_hub *hub){
 	int currx = 0;
 	int curry = 0;
+	int x = maxvar(hub, 'x') + 1;
+	int y = maxvar(hub, 'y') + 1;
 	int room = 0;
 	while (curry < y){
 		while (currx < x){
@@ -56,6 +59,7 @@ void mapper(int x, int y, t_hub *hub){
 		currx = 0;
 		curry++;
 	}
+	printf("\n");
 }
 
 int locate_room(int x, int y, t_hub *hub){
@@ -66,4 +70,19 @@ int locate_room(int x, int y, t_hub *hub){
 		temp = temp->next;
 	}
 	return (0);
+}
+
+int maxvar(t_hub *hub, char mode){
+	t_room *temp = hub->linear;
+	int max = 0;
+	while (temp){
+		if (mode == 'x')
+			if (max < temp->x)
+				max = temp->x;
+		if (mode == 'y')
+			if (max < temp->y)
+				max = temp->y;
+		temp = temp->next;
+	}
+	return (max);
 }
