@@ -51,3 +51,16 @@ void	room_link(t_hub *hub, char *line)
 	addlink(hub->links, set_link(to, from));
 	free_array(str);
 }
+
+t_room	*find_room(t_room *roomlist, char *str){
+	t_room	*cursor;
+	
+	cursor = roomlist;
+	while (cursor)
+	{
+		if (ft_strcmp(cursor->name, str) == 0)
+			return (cursor);
+		cursor = cursor->next;
+	}
+	return (NULL);
+}

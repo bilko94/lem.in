@@ -38,7 +38,7 @@ typedef struct		s_room
 	int				y;
 	int				link_count;
 	char			*name;
-	struct s_room	**links; // = (t_room**)malloc(sizeof(t_room*) * nb of rooms + 1);
+	struct t_link	*links; // = (t_room**)malloc(sizeof(t_room*) * nb of rooms + 1);
 	struct s_room	*next;
 	int				visited;
 	int				start;
@@ -56,6 +56,8 @@ typedef struct		s_link
 {
 	t_room			*to;
 	t_room			*from;
+	int				room1;
+	int				room2;
 	struct s_link	*next;
 }					t_link;
 
@@ -140,5 +142,9 @@ int		count_rooms(t_rd *data);
 int		populate(t_hub *hub, t_rd *data);
 int		insert(t_hub *hub, t_rd *data);
 int		write_room(t_room *start, char *line, int pos);
-
+int		link_rooms(t_hub *hub, char *line);
+int		onelink(t_hub *hub, t_rd *data);
+int		link_rooms(t_hub *hub, char *line);
+int		connector(t_hub *hub, int id1, int id2);
+int		link_rooms(t_hub *hub, char *line);
 #endif

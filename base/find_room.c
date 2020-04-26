@@ -12,16 +12,16 @@
 
 #include "../global.h"
 
-t_room	*find_room(t_room *roomlist, char *str)
-{
-	t_room	*cursor;
+// t_room	*find_room(t_room *roomlist, char *str)
+// {
+// 	t_room	*cursor;
 	
-	cursor = roomlist;
-	while (cursor->next)
-	{
-		if (ft_strcmp(cursor->name, str) == 0)
-			return (cursor);
-		cursor = cursor->next;
-	}
-	return (NULL);
-}
+// 	cursor = roomlist;
+// 	while (cursor->next)
+// 	{
+// 		if (ft_strcmp(cursor->name, str) == 0)
+// 			return (cursor);
+// 		cursor = cursor->next;
+// 	}
+// 	return (NULL);
+// }

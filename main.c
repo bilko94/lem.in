@@ -5,16 +5,21 @@ void room_echo(t_room *room);
 void mapper(t_hub *hub);
 int maxvar(t_hub *hub, char mode);
 int locate_room(int x, int y, t_hub *hub);
+void print_links(t_hub *hub);
+
+// extern registry *reg;
 
 int main(void){
 	t_rd *test1 = NULL;
 	t_hub *hub = NULL;
-
+	
+	// init_registry();
 	read_in(&test1);
 	build(&hub, test1);
 	printf("done !\n");
 	hub_echo(hub);
 	mapper(hub);
+	print_links(hub);
 	return (0);
 }
 
@@ -85,4 +90,12 @@ int maxvar(t_hub *hub, char mode){
 		temp = temp->next;
 	}
 	return (max);
+}
+
+void print_links(t_hub *hub){
+	t_link *temp = hub->links;
+	while (temp){
+		printf("%d <-> %d\n", temp->room1, temp->room2);
+		temp = temp->next;
+	}
 }

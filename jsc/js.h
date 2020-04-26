@@ -26,4 +26,5 @@ void		print_arr(int id);
 void		end(registry *reg);
 void		end_array(array *arr);
 void		print_head();
+
 #endif

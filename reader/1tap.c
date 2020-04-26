@@ -5,6 +5,7 @@ int build(t_hub **hub, t_rd *data){
 	if (((*hub) = malloc_hub())){
 		onetap((*hub), data);
 		insert((*hub), data);
+		onelink((*hub), data);
 		return 1;
 	}
 	return 0;
@@ -14,6 +15,24 @@ int onetap(t_hub *hub, t_rd *data){
 	hub->room_count = count_rooms(data);
 	build_rooms(hub);
 	return (0);
+}
+
+int insert(t_hub *hub, t_rd *data){
+	while (data){
+		if (!populate(hub, data))
+			return (0);
+		if (instruction(data->line) == 2)
+			data = data->next;
+		data = data->next;
+	}
+}
+
+int onelink(t_hub *hub, t_rd *data){
+	while (data){
+		if (instruction(data->line) == 5)
+			link_rooms(hub, data->line);
+		data = data->next;
+	}
 }
 
 int build_rooms(t_hub *hub){
@@ -42,7 +61,7 @@ int build_rooms(t_hub *hub){
 	return (1);
 }
 
-int		instruction(char *line){
+int	instruction(char *line){
 	if (line[0] == '#' && line[1] == '#')
 		return (2);
 	else if (line[0] == '#' && line[1] != '#')
@@ -88,6 +107,17 @@ t_room	*malloc_room(void){
 	return (room);
 }
 
+t_link *malloc_link(void){
+	t_link	*new = NULL;
+	
+	if ((new = (t_link *)malloc(sizeof(t_link)))){
+		new->room1 = -1;
+		new->room2 = -1;
+		new->next = NULL;
+	}
+	return (new);
+}
+
 int count_rooms(t_rd *data){
 	int i = 0;
 
@@ -99,15 +129,6 @@ int count_rooms(t_rd *data){
 	return (i);
 }
 
-int insert(t_hub *hub, t_rd *data){
-	while (data){
-		if (!populate(hub, data))
-			return (0);
-		if (instruction(data->line) == 2)
-			data = data->next;
-		data = data->next;
-	}
-}
 
 int populate(t_hub *hub, t_rd *data){
 	char *line = data->line;
@@ -146,4 +167,30 @@ int write_room(t_room *start, char *line, int pos){
 	return (1);
 }
 
-// int link_room(){}
+int link_rooms(t_hub *hub, char *line){
+	t_room	*to;
+	t_room	*from;
+	char	**str;
+
+	str = ft_strsplit(line, '-');
+	to = find_room(hub->linear, str[0]);
+	from = find_room(hub->linear , str[1]);
+	connector(hub, to->id, from->id);
+	// addlink(hub->links, set_link(to, from));
+	// free_array(str);
+}
+
+int connector(t_hub *hub, int id1, int id2){
+	t_link *temp = hub->links;
+	t_link *new = malloc_link();
+	new->room1 = id1;
+	new->room2 = id2;
+	if (!temp)
+		hub->links = new;
+	else {
+		while (temp->next)
+			temp = temp->next;
+		temp->next = new;
+	}
+	return (1);
+}
