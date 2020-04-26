@@ -97,10 +97,10 @@ t_room	*find_room(t_room **roomlist, char *str);
 t_room	*createhead(t_room **roomlist);
 t_room	*set_room(char *str);
 t_room	*init_room(void);
-void	add_empty_room(t_hub **hub, char *line, int identifier);
-void	add_start_data(t_hub **hub, char *line);
-void	add_end_data(t_hub **hub, char *line);
-void	addroom(t_hub **hub, char *line);
+void	add_empty_room(t_hub *hub, char *line, int identifier);
+void	add_start_data(t_hub *hub, char *line);
+void	add_end_data(t_hub *hub, char *line);
+void	addroom(t_hub *hub, char *line);
 // void	addendroom(t_hub **hub, char *line);
 // void	addstartroom(t_hub **hub, char *line);
 
@@ -125,9 +125,9 @@ void	free_array(char **str);
 
 //Errors & Verification
 
-void	check_link(t_hub **hub, char *line);
-void	check_room(t_hub **hub, char *line);
-void	check_line(t_hub **hub, char *line);
+void	check_link(t_hub *hub, char *line);
+void	check_room(t_hub *hub, char *line);
+void	check_line(t_hub *hub, char *line);
 void	check_ants(char *line);
 void	room_error(void);
 void	link_error(void);
