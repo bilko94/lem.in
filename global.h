@@ -135,10 +135,11 @@ typedef struct		s_hub
 // void	err(void);
 
 // init data
-void	read_in(t_rd **data);
-void	add_rd_node(t_rd **data, char *line);
-void	relink(t_hub *hub);
+int		read_in(t_rd **data);
+int		add_rd_node(t_rd **data, char *line);
 int		init_build(t_hub **hub);
+void	relink(t_hub *hub);
+int		loop_break(int max);
 
 // malloc
 t_hub	*malloc_hub(void);
@@ -149,6 +150,7 @@ void	purge(t_hub *hub);
 void	purge_t_rd(t_rd *raw_data);
 void	purge_t_rooms(t_room *rooms);
 void	purge_t_links(t_link *links);
+int		purge_split(int len, char **split);
 
 // onetap
 int		onetap(t_hub *hub);

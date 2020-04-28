@@ -9,6 +9,7 @@ int insert(t_hub *hub){
 			data = data->next;
 		data = data->next;
 	}
+	return (1);
 }
 
 int populate(t_hub *hub, t_rd *data){
@@ -35,7 +36,8 @@ int write_room(t_room *start, char *line, int pos){
 		start = start->next;
 	}
 	start->visited = 1;
-	str1 = ft_strsplit(line, ' ');
+	if (!(str1 = ft_strsplit(line, ' ')))
+		return (1);
 	start->name = str1[0];
 	start->x = ft_atoi(str1[1]);
 	start->y = ft_atoi(str1[2]);

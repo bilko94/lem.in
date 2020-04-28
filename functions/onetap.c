@@ -2,8 +2,7 @@
 
 int onetap(t_hub *hub){
 	hub->room_count = count_rooms(hub->raw_data);
-	build_rooms(hub);
-	return (0);
+	return build_rooms(hub);
 }
 
 int count_rooms(t_rd *data){
@@ -41,18 +40,4 @@ int build_rooms(t_hub *hub){
 		id++;
 	}
 	return (1);
-}
-
-int	instruction(char *line){
-	if (line[0] == '#' && line[1] == '#')
-		return (2);
-	else if (line[0] == '#' && line[1] != '#')
-		return (3);
-	else if (ft_wordcount(line, ' ') == 3)
-		return (4);
-	else if (ft_wordcount(line, '-') == 2)
-		return (5);
-	else if (ft_isdigit(line[0]))
-		return (1);
-	return (6);
 }

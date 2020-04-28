@@ -62,6 +62,7 @@ void purge(t_hub *hub){
 }
 
 void purge_t_rd(t_rd *raw_data){
+	printf("purging rd's\n");
 	t_rd *temp = raw_data;
 	t_rd *next = NULL;
 	while (temp){
@@ -92,4 +93,11 @@ void purge_t_links(t_link *links){
 		free(temp);
 		temp = next;
 	}
+}
+
+int purge_split(int len, char **split){
+	while (len--)
+		free(split[len]);
+	free(split);
+	return (0);
 }
