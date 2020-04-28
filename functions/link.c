@@ -38,7 +38,7 @@ int connector(t_hub *hub, t_room *room, t_room *next_room){
 	t_link *temp = room->links;
 	new->linked_room = next_room;
 	printf("####### connecting ########\n");
-	printf("binding %d:%p to %d:%p\n", room->id, room, next_room->id, next_room);
+	printf("binding %s:%p to %d:%p\n", room->name, room, next_room->id, next_room);
 	if (!temp){
 		printf("first node:%p attaching %d:%p to links of %d\n", new,new->linked_room->id, new->linked_room, room->id);
 		room->links = new;
