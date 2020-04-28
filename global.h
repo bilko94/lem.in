@@ -40,7 +40,7 @@ typedef struct			s_network
 	struct s_network	**links;
 	int					start;
 	int					end;
-}						t_network
+}						t_network;
 
 typedef struct		s_room
 {

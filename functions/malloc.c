@@ -4,9 +4,10 @@ t_hub	*malloc_hub(void){
 	t_hub	*new = NULL;
 	
 	if ((new = (t_hub *)malloc(sizeof(t_hub)))){
-		new->end = NULL;
-		new->start = NULL;
-		new->linear = NULL;
+		// new->end = NULL;
+		// new->start = NULL;
+		new->network = NULL;
+		new->room = NULL;
 		new->links = NULL;
 		new->room_count = 0;
 		new->ant_count = 0;

@@ -25,8 +25,8 @@ int build_rooms(t_hub *hub){
 	
 	if ((temp = malloc_room())){
 		temp->id = id + 1;
-		hub->linear = temp;
-		curr = hub->linear;
+		hub->room = temp;
+		curr = hub->room;
 		amm--;
 		id++;
 	} else

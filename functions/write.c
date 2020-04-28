@@ -17,11 +17,11 @@ int populate(t_hub *hub, t_rd *data){
 		hub->ant_count = ft_atoi(line);
 	} else if (ref == 2) {
 		if (ft_strcmp(line, "##start") == 0)
-			return write_room(hub->linear, data->next->line, 1);
+			return write_room(hub->room, data->next->line, 1);
 		else if (ft_strcmp(line, "##end") == 0)
-			return write_room(hub->linear, data->next->line, -1);
+			return write_room(hub->room, data->next->line, -1);
 	} else if (ref == 4){
-		return write_room(hub->linear, line, 0);
+		return write_room(hub->room, line, 0);
 	}
 }
 

@@ -14,8 +14,8 @@ int link_rooms(t_hub *hub, char *line){
 	char	**str;
 
 	str = ft_strsplit(line, '-');
-	to = find_room(hub->linear, str[0]);
-	from = find_room(hub->linear , str[1]);
+	to = find_room(hub->room, str[0]);
+	from = find_room(hub->room, str[1]);
 	connector(hub, to->id, from->id);
 	free(str);
 }
