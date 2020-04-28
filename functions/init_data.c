@@ -44,7 +44,28 @@ int			init_build(t_hub **hub, t_rd *data){
 		onetap((*hub), data);
 		insert((*hub), data);
 		onelink((*hub), data);
+		relink(((*hub)));
 		return 1;
 	}
 	return 0;
+}
+
+void relink(t_hub *hub){
+	t_room *start = hub->room;
+	t_room *temp = hub->room;
+	t_room *start_room = NULL;
+
+	if (hub->room->start == 1)
+		return ;
+	while (temp){
+		if (temp->next)
+			if (temp->next->start == 1){
+				start_room = temp->next;
+				temp->next = start_room->next;
+				start_room->next = hub->room;
+				hub->room = start_room;
+				break ;
+			}
+		temp = temp->next;
+	}
 }

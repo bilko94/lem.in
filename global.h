@@ -49,7 +49,7 @@ typedef struct		s_room
 	int				y;
 	int				link_count;
 	char			*name;
-	struct t_link	*links; // = (t_room**)malloc(sizeof(t_room*) * nb of rooms + 1);
+	struct s_link	*links; // = (t_room**)malloc(sizeof(t_room*) * nb of rooms + 1);
 	struct s_room	*next;
 	int				visited;
 	int				start;
@@ -65,10 +65,7 @@ typedef struct		s_queue
 
 typedef struct		s_link
 {
-	t_room			*to;
-	t_room			*from;
-	int				room1;
-	int				room2;
+	t_room			*linked_room;
 	struct s_link	*next;
 }					t_link;
 
@@ -139,8 +136,8 @@ typedef struct		s_hub
 // init data
 void	read_in(t_rd **data);
 void	add_rd_node(t_rd **data, char *line);
+void	relink(t_hub *hub);
 int		init_build(t_hub **hub, t_rd *data);
-
 
 // malloc
 t_hub	*malloc_hub(void);
@@ -157,8 +154,10 @@ int		instruction(char *line);
 // link
 int		onelink(t_hub *hub, t_rd *data);
 int		link_rooms(t_hub *hub, char *line);
+int connector(t_hub *hub, t_room *room, t_room *next_room);
+// int		hardlink(t_hub *hub);
 t_room	*find_room(t_room *roomlist, char *str);
-int		connector(t_hub *hub, int id1, int id2);
+// t_room	*find_room_by_id(t_hub *hub, int id);
 
 // write
 int		insert(t_hub *hub, t_rd *data);
@@ -171,6 +170,6 @@ void room_echo(t_room *room);
 void mapper(t_hub *hub);
 int maxvar(t_hub *hub, char mode);
 int locate_room(int x, int y, t_hub *hub);
-void print_links(t_hub *hub);
+void print_links(t_link *links);
 
 #endif

@@ -8,8 +8,8 @@ int main(void){
 	init_build(&hub, test1);
 	printf("done !\n");
 	hub_echo(hub);
-	print_links(hub);
 	mapper(hub);
+	// while(1);
 	return (0);
 }
 

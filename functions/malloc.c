@@ -4,8 +4,6 @@ t_hub	*malloc_hub(void){
 	t_hub	*new = NULL;
 	
 	if ((new = (t_hub *)malloc(sizeof(t_hub)))){
-		// new->end = NULL;
-		// new->start = NULL;
 		new->network = NULL;
 		new->room = NULL;
 		new->links = NULL;
@@ -37,8 +35,7 @@ t_link	*malloc_link(void){
 	t_link	*new = NULL;
 	
 	if ((new = (t_link *)malloc(sizeof(t_link)))){
-		new->room1 = -1;
-		new->room2 = -1;
+		new->linked_room = NULL;
 		new->next = NULL;
 	}
 	return (new);

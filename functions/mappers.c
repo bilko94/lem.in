@@ -6,6 +6,7 @@ void hub_echo(t_hub *hub){
 	while(temp){
 		printf("%p ", temp);
 		room_echo(temp);
+		print_links(temp->links);
 		printf("\n");
 		temp = temp->next;
 	}
@@ -69,10 +70,11 @@ int maxvar(t_hub *hub, char mode){
 	return (max);
 }
 
-void print_links(t_hub *hub){
-	t_link *temp = hub->links;
+void print_links(t_link *links){
+	t_link *temp = links;
+	printf(" links <->");
 	while (temp){
-		printf("%d <-> %d\n", temp->room1, temp->room2);
+		printf(" %d:%p",  temp->linked_room->id, temp->linked_room);
 		temp = temp->next;
 	}
 }
