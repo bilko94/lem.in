@@ -19,7 +19,19 @@ typedef struct			s_roomids
 {
 	int					id;
 	struct s_roomids	*next;
-}						t_roomids
+}						t_roomids;
+
+typedef struct			s_network
+{
+	int					id;
+	int					visited;
+	int					x;
+	int					y;
+	char				*name;
+	struct s_network	**links;
+	int					start;
+	int					end;
+}						t_network
 
 typedef struct		s_room
 {
@@ -55,9 +67,8 @@ typedef struct		s_link
 typedef struct		s_hub
 {
 	t_link			*links;
-	t_room			*linear;
-	t_room			*start;
-	t_room			*end;
+	t_room			*room;
+	t_network		*network;
 	t_queue			*queue;
 	int				room_count;
 	int				ant_count;

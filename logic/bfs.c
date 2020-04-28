@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "global.h"
+#include "../global.h"
 
 void    addroomid(int id, t_roomids **roomids)
 {
@@ -29,3 +29,27 @@ void    addroomid(int id, t_roomids **roomids)
         *roomids = newnode;
 }
 
+void    freeroomids(t_roomids **roomids)
+{
+    if ((*roomids)->next)
+        freeroomids(&(*roomids)->next);
+    free(*roomids);
+}
+
+int     bfs(t_hub *hub)
+{
+    int     i;
+    t_room   *room;
+
+    i = 0;
+    while(1)
+    {
+        addroomnode(&hub->room, ++i);
+        room = hub->room;
+        while (room->next)
+            room = room->next;
+        if (!search(hub, room))
+            break;
+    }
+    
+}
