@@ -1,7 +1,16 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
-#include "depend/libft/libft.h"
-#include "depend/get_next/get_next_line.h"
+# define START 1
+# define END 2
+# define RED "[0;31m"
+# define GREEN "[0;32m"
+# define YELLOW "[0;33m"
+# define BLUE "[0;34m"
+# define PURPLE "[0;35m"
+# define RESET "[0m"
+# include "depend/libft/libft.h"
+# include "depend/get_next/get_next_line.h"
+// # include "jsc/js.h"
 # include <unistd.h>
 # include <string.h>
 # include <stdlib.h>
@@ -40,15 +49,12 @@ typedef struct		s_room
 	int				y;
 	int				link_count;
 	char			*name;
-	struct s_room	**links; // = (t_room**)malloc(sizeof(t_room*) * nb of rooms + 1);
+	struct t_link	*links; // = (t_room**)malloc(sizeof(t_room*) * nb of rooms + 1);
 	struct s_room	*next;
 	int				visited;
 	int				start;
 	int				end;
 }					t_room;
-// ex. line = 5-2
-// char **connected[links] = find.room.by.name(data[1]);
-// links++;
 
 typedef struct		s_queue
 {
@@ -61,6 +67,8 @@ typedef struct		s_link
 {
 	t_room			*to;
 	t_room			*from;
+	int				room1;
+	int				room2;
 	struct s_link	*next;
 }					t_link;
 
@@ -75,94 +83,94 @@ typedef struct		s_hub
 	int				path_count;
 }					t_hub;
 
-//Mapping
+// //Mapping
 
-t_hub	*build_hub(t_rd **data);
-void	add_data(t_hub **hub, int ref, char *line);
-void	add_rd_node(t_rd **data, char *line);
-void	read_data(t_hub *hub, t_rd **data);
-int		check_ref(char *line);
+// t_hub	*build_hub(t_rd **data);
+// void	add_data(t_hub *hub, int ref, char *line);
+// void	read_data(t_hub *hub, t_rd **data);
+// int		check_ref(char *line);
+// void	readmap(t_rd **rd);
+// t_hub	*init_hub(void);
+// void	start_map(void);
+// // t_rd	*create_rd_node(char *line);
+// // void	addnode(t_rd **rd);
+
+// //Rooms
+
+// t_room	*createhead(t_room **roomlist);
+// t_room	*set_room(char *str);
+// t_room	*init_room(void);
+// void	add_empty_room(t_hub *hub, char *line, int identifier);
+// void	add_start_data(t_hub *hub, char *line);
+// void	add_end_data(t_hub *hub, char *line);
+// void	addroom(t_hub *hub, char *line);
+// // void	addendroom(t_hub **hub, char *line);
+// // void	addstartroom(t_hub **hub, char *line);
+
+// //Links
+
+// t_link	*set_link(t_room *from, t_room *to);
+// void	addlink(t_link *list, t_link *new);
+// void	room_link(t_hub *hub, char *line);
+
+// //Miscellaneous
+
+// int		ft_arraylen(char **str);
+// int		testcase(char	*str);
+// int		ft_list_size(t_room *stack);
+// void	printstack(t_rd **rd);
+// void	printrooms(t_room *roomlist);
+// int		countrooms(void);
+
+// //Freedom
+
+// void	free_array(char **str);
+
+// //Errors & Verification
+
+// void	check_link(t_hub *hub, char *line);
+// void	check_room(t_hub **hub, char *line);
+// void	check_line(t_hub *hub, char *line);
+// void	check_ants(char *line);
+// void	room_error(void);
+// void	link_error(void);
+// void	err(void);
+
+// init data
 void	read_in(t_rd **data);
-void	readmap(t_rd **rd);
-void	*init_hub(void);
-void	start_map(void);
-t_rd	*init_rd(void);
-// t_rd	*create_rd_node(char *line);
-// void	addnode(t_rd **rd);
+void	add_rd_node(t_rd **data, char *line);
+int		init_build(t_hub **hub, t_rd *data);
 
-//Rooms
 
-t_room	*find_room(t_room **roomlist, char *str);
-t_room	*createhead(t_room **roomlist);
-t_room	*set_room(char *str);
-t_room	*init_room(void);
-void	add_empty_room(t_hub **hub, char *line, int identifier);
-void	add_start_data(t_hub **hub, char *line);
-void	add_end_data(t_hub **hub, char *line);
-void	addroom(t_hub **hub, char *line);
-// void	addendroom(t_hub **hub, char *line);
-// void	addstartroom(t_hub **hub, char *line);
+// malloc
+t_hub	*malloc_hub(void);
+t_room	*malloc_room(void);
+t_link	*malloc_link(void);
+t_rd	*malloc_rd(void);
 
-//Links
+// onetap
+int		onetap(t_hub *hub, t_rd *data);
+int		count_rooms(t_rd *data);
+int		build_rooms(t_hub *hub);
+int		instruction(char *line);
 
-t_link	*set_link(t_room *from, t_room *to);
-void	addlink(t_link **list, t_link *new);
-void	room_link(t_hub *hub, char *line);
+// link
+int		onelink(t_hub *hub, t_rd *data);
+int		link_rooms(t_hub *hub, char *line);
+t_room	*find_room(t_room *roomlist, char *str);
+int		connector(t_hub *hub, int id1, int id2);
 
-//Miscellaneous
+// write
+int		insert(t_hub *hub, t_rd *data);
+int		populate(t_hub *hub, t_rd *data);
+int		write_room(t_room *start, char *line, int pos);
 
-int		ft_arraylen(char **str);
-int		testcase(char	*str);
-int		ft_list_size(t_room *stack);
-void	printstack(t_rd **rd);
-void	printrooms(t_room *roomlist);
-int		countrooms(void);
-
-//Freedom
-
-void	free_array(char **str);
-
-//Errors & Verification
-
-void	check_link(t_hub **hub, char *line);
-void	check_room(t_hub **hub, char *line);
-void	check_line(t_hub **hub, char *line);
-void	check_ants(char *line);
-void	room_error(void);
-void	link_error(void);
-void	err(void);
-
-// reader
-struct raw_map {
-	char *line;
-	struct raw_map *next;
-} raw_map_struct;
-struct raw_map *reader();
-struct raw_map *new_raw_map(char *c);
-void echo_map(struct raw_map *raw_map_data);
-
-// interpreter
-struct map {
-	char *name;
-	int *room;
-	int *links;
-	int occ;
-	int x;
-	int y;
-	struct map *next;
-};
-
-struct head {
-	struct raw_map *raw_data;
-	struct map *start_map;
-	int start;
-	int end;
-	int ants;
-};
-struct head *interpreter(struct raw_map *raw_map_data);
-struct head *head_malloc(struct raw_map *raw_data);
-
-// instruction set
-int validate_instruction_set(struct head *map_head, struct raw_map *raw_data);
+// mappers
+void hub_echo(t_hub *hub);
+void room_echo(t_room *room);
+void mapper(t_hub *hub);
+int maxvar(t_hub *hub, char mode);
+int locate_room(int x, int y, t_hub *hub);
+void print_links(t_hub *hub);
 
 #endif
