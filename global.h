@@ -49,7 +49,7 @@ typedef struct		s_room
 	int				y;
 	int				link_count;
 	char			*name;
-	struct s_link	*links; // = (t_room**)malloc(sizeof(t_room*) * nb of rooms + 1);
+	struct s_link	*links; // links re now a list of links
 	struct s_room	*next;
 	int				visited;
 	int				start;
