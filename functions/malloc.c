@@ -50,3 +50,46 @@ t_rd	*malloc_rd(void){
 	new->next = NULL;
 	return (new);
 }
+
+void purge(t_hub *hub){
+	if (hub){
+		if (hub->raw_data)
+			purge_t_rd(hub->raw_data);
+		if (hub->room)
+			purge_t_rooms(hub->room);
+		free(hub);
+	}
+}
+
+void purge_t_rd(t_rd *raw_data){
+	t_rd *temp = raw_data;
+	t_rd *next = NULL;
+	while (temp){
+		next = temp->next;
+		free(temp->line);
+		free(temp);
+		temp = next;
+	}
+}
+
+void purge_t_rooms(t_room *rooms){
+	t_room *temp = rooms;
+	t_room *next = NULL;
+	while (temp){
+		next = temp->next;
+		free(temp->name);
+		purge_t_links(temp->links);
+		free(temp);
+		temp = next;
+	}
+}
+
+void purge_t_links(t_link *links){
+	t_link *temp = links;
+	t_link *next = NULL;
+	while (temp){
+		next = temp->next;
+		free(temp);
+		temp = next;
+	}
+}

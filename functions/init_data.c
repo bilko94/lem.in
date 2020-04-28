@@ -38,12 +38,14 @@ void		add_rd_node(t_rd **data, char *line){
 	}
 }
 
-int			init_build(t_hub **hub, t_rd *data){
+int			init_build(t_hub **hub){
+	t_rd *data = NULL;
 
 	if (((*hub) = malloc_hub())){
-		onetap((*hub), data);
-		insert((*hub), data);
-		onelink((*hub), data);
+		read_in(&(*hub)->raw_data);
+		onetap((*hub));
+		insert((*hub));
+		onelink((*hub));
 		relink(((*hub)));
 		return 1;
 	}

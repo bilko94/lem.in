@@ -75,6 +75,7 @@ typedef struct		s_hub
 	t_room			*room;
 	t_network		*network;
 	t_queue			*queue;
+	t_rd			*raw_data;
 	int				room_count;
 	int				ant_count;
 	int				path_count;
@@ -137,30 +138,32 @@ typedef struct		s_hub
 void	read_in(t_rd **data);
 void	add_rd_node(t_rd **data, char *line);
 void	relink(t_hub *hub);
-int		init_build(t_hub **hub, t_rd *data);
+int		init_build(t_hub **hub);
 
 // malloc
 t_hub	*malloc_hub(void);
 t_room	*malloc_room(void);
 t_link	*malloc_link(void);
 t_rd	*malloc_rd(void);
+void	purge(t_hub *hub);
+void	purge_t_rd(t_rd *raw_data);
+void	purge_t_rooms(t_room *rooms);
+void	purge_t_links(t_link *links);
 
 // onetap
-int		onetap(t_hub *hub, t_rd *data);
+int		onetap(t_hub *hub);
 int		count_rooms(t_rd *data);
 int		build_rooms(t_hub *hub);
 int		instruction(char *line);
 
 // link
-int		onelink(t_hub *hub, t_rd *data);
+int		onelink(t_hub *hub);
 int		link_rooms(t_hub *hub, char *line);
-int connector(t_hub *hub, t_room *room, t_room *next_room);
-// int		hardlink(t_hub *hub);
+int		connector(t_hub *hub, t_room *room, t_room *next_room);
 t_room	*find_room(t_room *roomlist, char *str);
-// t_room	*find_room_by_id(t_hub *hub, int id);
 
 // write
-int		insert(t_hub *hub, t_rd *data);
+int		insert(t_hub *hub);
 int		populate(t_hub *hub, t_rd *data);
 int		write_room(t_room *start, char *line, int pos);
 

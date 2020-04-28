@@ -1,6 +1,8 @@
 #include "../global.h"
 
-int onelink(t_hub *hub, t_rd *data){
+int onelink(t_hub *hub){
+	t_rd *data = hub->raw_data;
+
 	while (data){
 		if (instruction(data->line) == 5)
 			link_rooms(hub, data->line);
@@ -17,6 +19,8 @@ int link_rooms(t_hub *hub, char *line){
 	to = find_room(hub->room, str[0]);
 	from = find_room(hub->room, str[1]);
 	connector(hub, to, from);
+	free(str[0]);
+	free(str[1]);
 	free(str);
 }
 

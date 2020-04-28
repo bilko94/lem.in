@@ -1,6 +1,7 @@
 #include "../global.h"
 
-int insert(t_hub *hub, t_rd *data){
+int insert(t_hub *hub){
+	t_rd *data = hub->raw_data;
 	while (data){
 		if (!populate(hub, data))
 			return (0);
@@ -42,6 +43,8 @@ int write_room(t_room *start, char *line, int pos){
 		start->start = 1;
 	else if (pos == -1)
 		start->end = 1;
+	free(str1[1]);
+	free(str1[2]);
 	free(str1);
 	return (1);
 }
