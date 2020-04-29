@@ -43,13 +43,16 @@ int     search(t_hub *hub, t_routelist *routelist)
 
     q = NULL;
     addtoqueue(&q, NULL, hub->room);
+    printf("queue created\n");
     while (q && !q->room->end)
     {
-        // queue->room->visited = 1;
+        printf("checking for end: %d\n", q->room->end);
         while (q->room->links && q->room->links->next)
         {
-            if (!q->room->links->visited)
+            if (!q->room->links->visited){
                 addtoqueue(&q, q, q->room->links)
+                pritnf("added %d to queue\n", q->room->id);
+            }
             q->room->links = q->room->links->next;
         }
         if (!q->room->end)
@@ -82,11 +85,13 @@ int     bfs(t_hub *hub)
     while(1)
     {
         addroutelistnode(&hub->routelist, ++i);
+        printf("added first node for routelist\n")
         routelist = hub->routelist;
         while (routelist->next)
             routelist = routelist->next;
+        printf("search\n");
         if (!search(hub, routelist))
             break;
     }
-
+    printf("Route creation error\n");
 }

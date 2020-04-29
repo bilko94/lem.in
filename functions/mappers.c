@@ -2,10 +2,11 @@
 
 void hub_echo(t_hub *hub){
 	printf("hub %p\t \nrooms:%d \nants:%d \npaths:%d\n", hub, hub->room_count, hub->ant_count, hub->path_count);
-	t_room *temp= hub->network;
+	t_room *temp= hub->room;
 	while(temp){
 		printf("%p ", temp);
 		room_echo(temp);
+		print_links(temp->links);
 		printf("\n");
 		temp = temp->next;
 	}
@@ -45,7 +46,7 @@ void mapper(t_hub *hub){
 }
 
 int locate_room(int x, int y, t_hub *hub){
-	t_room *temp = hub->linear;
+	t_room *temp = hub->room;
 	while (temp){
 		if (temp->x == x & temp->y == y)
 			return temp->id;
@@ -55,7 +56,7 @@ int locate_room(int x, int y, t_hub *hub){
 }
 
 int maxvar(t_hub *hub, char mode){
-	t_room *temp = hub->linear;
+	t_room *temp = hub->room;
 	int max = 0;
 	while (temp){
 		if (mode == 'x')
@@ -69,10 +70,11 @@ int maxvar(t_hub *hub, char mode){
 	return (max);
 }
 
-void print_links(t_hub *hub){
-	t_link *temp = hub->links;
+void print_links(t_link *links){
+	t_link *temp = links;
+	printf(" links <->");
 	while (temp){
-		printf("%d <-> %d\n", temp->room1, temp->room2);
+		printf(" %d:%p",  temp->linked_room->id, temp->linked_room);
 		temp = temp->next;
 	}
 }

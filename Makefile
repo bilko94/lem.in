@@ -10,6 +10,10 @@ t :
 	make re
 	./lemin < maps/test.map
 
+tl :
+	make re
+	valgrind --leak-check=full ./lemin < maps/test.map
+
 dependencies :
 	cd depend; make;
 

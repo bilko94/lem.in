@@ -57,7 +57,7 @@ typedef struct		s_room
 	int				y;
 	int				link_count;
 	char			*name;
-	struct t_link	*links; // = (t_room**)malloc(sizeof(t_room*) * nb of rooms + 1);
+	struct s_link	*links; // links re now a list of links
 	struct s_room	*next;
 	int				visited;
 	int				start;
@@ -79,10 +79,7 @@ typedef	struct		s_route
 
 typedef struct		s_link
 {
-	t_room			*to;
-	t_room			*from;
-	int				room1;
-	int				room2;
+	t_room			*linked_room;
 	struct s_link	*next;
 }					t_link;
 
@@ -93,6 +90,7 @@ typedef struct		s_hub
 	t_network		*network;
 	t_queue			*queue;
 	t_routelist		*routelist;
+	t_rd			*raw_data;
 	int				room_count;
 	int				ant_count;
 	int				path_count;
@@ -152,31 +150,37 @@ typedef struct		s_hub
 // void	err(void);
 
 // init data
-void	read_in(t_rd **data);
-void	add_rd_node(t_rd **data, char *line);
-int		init_build(t_hub **hub, t_rd *data);
-
+int		read_in(t_rd **data);
+int		add_rd_node(t_rd **data, char *line);
+int		init_build(t_hub **hub);
+void	relink(t_hub *hub);
+int		loop_break(int max);
 
 // malloc
 t_hub	*malloc_hub(void);
 t_room	*malloc_room(void);
 t_link	*malloc_link(void);
 t_rd	*malloc_rd(void);
+void	purge(t_hub *hub);
+void	purge_t_rd(t_rd *raw_data);
+void	purge_t_rooms(t_room *rooms);
+void	purge_t_links(t_link *links);
+int		purge_split(int len, char **split);
 
 // onetap
-int		onetap(t_hub *hub, t_rd *data);
+int		onetap(t_hub *hub);
 int		count_rooms(t_rd *data);
 int		build_rooms(t_hub *hub);
 int		instruction(char *line);
 
 // link
-int		onelink(t_hub *hub, t_rd *data);
+int		onelink(t_hub *hub);
 int		link_rooms(t_hub *hub, char *line);
+int		connector(t_hub *hub, t_room *room, t_room *next_room);
 t_room	*find_room(t_room *roomlist, char *str);
-int		connector(t_hub *hub, int id1, int id2);
 
 // write
-int		insert(t_hub *hub, t_rd *data);
+int		insert(t_hub *hub);
 int		populate(t_hub *hub, t_rd *data);
 int		write_room(t_room *start, char *line, int pos);
 
@@ -186,6 +190,6 @@ void room_echo(t_room *room);
 void mapper(t_hub *hub);
 int maxvar(t_hub *hub, char mode);
 int locate_room(int x, int y, t_hub *hub);
-void print_links(t_hub *hub);
+void print_links(t_link *links);
 
 #endif

@@ -1,23 +1,31 @@
 #include "../global.h"
 
-int onelink(t_hub *hub, t_rd *data){
+int onelink(t_hub *hub){
+	t_rd *data = hub->raw_data;
+
 	while (data){
 		if (instruction(data->line) == 5)
-			link_rooms(hub, data->line);
+			if (!link_rooms(hub, data->line))
+				return (0);
 		data = data->next;
 	}
+	return (1);
 }
 
 int link_rooms(t_hub *hub, char *line){
 	t_room	*to;
 	t_room	*from;
 	char	**str;
-
-	str = ft_strsplit(line, '-');
-	to = find_room(hub->linear, str[0]);
-	from = find_room(hub->linear , str[1]);
-	connector(hub, to->id, from->id);
-	free(str);
+	if (!(str = ft_strsplit(line, '-')))
+		return (0);
+	if (!(to = find_room(hub->room, str[0])))
+		return (purge_split(2, str));
+	if (!(from = find_room(hub->room, str[1])))
+		return (purge_split(2, str));
+	if (!connector(hub, to, from))
+		return (purge_split(2, str));
+	purge_split(2, str);
+	return (1);
 }
 
 t_room	*find_room(t_room *roomlist, char *str){
@@ -33,19 +41,18 @@ t_room	*find_room(t_room *roomlist, char *str){
 	return (NULL);
 }
 
-int connector(t_hub *hub, int id1, int id2){
-	t_link *temp = hub->links;
+int connector(t_hub *hub, t_room *room, t_room *next_room){
 	t_link *new = malloc_link();
-	new->room1 = id1;
-	new->room2 = id2;
-	if (!temp)
-		hub->links = new;
-	else {
+	if (!new)
+		return (0);
+	t_link *temp = room->links;
+	new->linked_room = next_room;
+	if (!temp){
+		room->links = new;
+	} else {
 		while (temp->next)
 			temp = temp->next;
 		temp->next = new;
 	}
 	return (1);
 }
-
-

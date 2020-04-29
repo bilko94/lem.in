@@ -1,9 +1,8 @@
 #include "../global.h"
 
-int onetap(t_hub *hub, t_rd *data){
-	hub->room_count = count_rooms(data);
-	build_rooms(hub);
-	return (0);
+int onetap(t_hub *hub){
+	hub->room_count = count_rooms(hub->raw_data);
+	return build_rooms(hub);
 }
 
 int count_rooms(t_rd *data){
@@ -25,8 +24,8 @@ int build_rooms(t_hub *hub){
 	
 	if ((temp = malloc_room())){
 		temp->id = id + 1;
-		hub->linear = temp;
-		curr = hub->linear;
+		hub->room = temp;
+		curr = hub->room;
 		amm--;
 		id++;
 	} else
@@ -41,18 +40,4 @@ int build_rooms(t_hub *hub){
 		id++;
 	}
 	return (1);
-}
-
-int	instruction(char *line){
-	if (line[0] == '#' && line[1] == '#')
-		return (2);
-	else if (line[0] == '#' && line[1] != '#')
-		return (3);
-	else if (ft_wordcount(line, ' ') == 3)
-		return (4);
-	else if (ft_wordcount(line, '-') == 2)
-		return (5);
-	else if (ft_isdigit(line[0]))
-		return (1);
-	return (6);
 }

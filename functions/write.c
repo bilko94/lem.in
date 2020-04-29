@@ -1,6 +1,7 @@
 #include "../global.h"
 
-int insert(t_hub *hub, t_rd *data){
+int insert(t_hub *hub){
+	t_rd *data = hub->raw_data;
 	while (data){
 		if (!populate(hub, data))
 			return (0);
@@ -8,6 +9,7 @@ int insert(t_hub *hub, t_rd *data){
 			data = data->next;
 		data = data->next;
 	}
+	return (1);
 }
 
 int populate(t_hub *hub, t_rd *data){
@@ -17,11 +19,11 @@ int populate(t_hub *hub, t_rd *data){
 		hub->ant_count = ft_atoi(line);
 	} else if (ref == 2) {
 		if (ft_strcmp(line, "##start") == 0)
-			return write_room(hub->linear, data->next->line, 1);
+			return write_room(hub->room, data->next->line, 1);
 		else if (ft_strcmp(line, "##end") == 0)
-			return write_room(hub->linear, data->next->line, -1);
+			return write_room(hub->room, data->next->line, -1);
 	} else if (ref == 4){
-		return write_room(hub->linear, line, 0);
+		return write_room(hub->room, line, 0);
 	}
 }
 
@@ -34,7 +36,8 @@ int write_room(t_room *start, char *line, int pos){
 		start = start->next;
 	}
 	start->visited = 1;
-	str1 = ft_strsplit(line, ' ');
+	if (!(str1 = ft_strsplit(line, ' ')))
+		return (1);
 	start->name = str1[0];
 	start->x = ft_atoi(str1[1]);
 	start->y = ft_atoi(str1[2]);
@@ -42,6 +45,8 @@ int write_room(t_room *start, char *line, int pos){
 		start->start = 1;
 	else if (pos == -1)
 		start->end = 1;
+	free(str1[1]);
+	free(str1[2]);
 	free(str1);
 	return (1);
 }

@@ -66,8 +66,10 @@ void    freequeue(t_queue **q, t_roomids *roomids, t_route **curroute)
             tmproute = *curroute;
             while (tmproute && (tmproute->room->id != (*q)->node->id))
                 tmproute = tmproute->next;
-            if (!tmproute)
+            if (!tmproute){
                 addroute(curroute, (*q)->room);
+                printf("added route for %d\n", (*q)->room->id)
+            }
             if (!((*q)->room->start || (*q)->room->end))
                 (*q)->node->visited = 1;
         }
