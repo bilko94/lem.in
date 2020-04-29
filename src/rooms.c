@@ -10,23 +10,89 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-int     addroomnode(t_room **room, int id)
+int     addroutelistnode(t_routelist **routelist, int id)
 {
-    t_room *newnode;
-    t_room *curnode;
+    t_routelist *newnode;
+    t_routelist *curnode;
 
-    curnode = *roomids;
+    curnode = *routelist;
     while (curnode && curnode->next)
         curnode = curnode->next;
     if (!(newnode = (t_room*)malloc(sizeof(t_roomids))))
         return (0)
     newnode->id = id;
-    newnode->visited = 0;
+    newnode->route = NULL;
+    newnode->ants = 0;
     newnode->next = NULL;
-    if (*room)
+    if (*routelist)
         curnode->next = newnode;
     else
-        *room = newnode;
+        *routelist = newnode;
     return (1);
 }
 
+void    addroute(t_route **route, t_network *room)
+{
+    t_route  *curroom;
+    t_route  *newroom;
+
+    curroom = *route;
+    while (curroom && curroom->next)
+        curroom = curroom->next;
+    if (!(newroom = (t_route*)malloc(sizeof(t_route))))
+        return (0);
+    newroom->room = room;
+    newroom->next = NULL;
+    if (*route)
+        curroom->next = newroom;
+    else
+        *route = newroom;
+    return (1);
+}
+
+void    freequeue(t_queue **q, t_roomids *roomids, t_route **curroute)
+{
+    t_roomids      *tmpids;
+    t_route        *tmproute;
+
+    if (q)
+    {
+        tmpids = roomids;
+        while (tmpids && tmpids->next && (tmpids->id != (*q)->room->id))
+            tmpids = tmpids->next;
+        (*q)->room->visited = 0;
+        if (tmpids && (tmpids->id == (*q)->node->id))
+        {
+            tmproute = *curroute;
+            while (tmproute && (tmproute->room->id != (*q)->node->id))
+                tmproute = tmproute->next;
+            if (!tmproute)
+                addroute(curroute, (*q)->room);
+            if (!((*q)->room->start || (*q)->room->end))
+                (*q)->node->visited = 1;
+        }
+        if ((*q)->next)
+            freequeue(&((*q)->next), roomids, curroute);
+        free(*q);
+        *q = NULL;
+    }
+}
+
+void    addtoqueue(t_queue **q, t_queue *parent, t_room *room)
+{
+    t_queue *curq;
+    t_queue *newq;
+
+    curq = *q;
+    while (curq && curq->next){
+        curq = curq->next;
+    }
+    newq = (t_queue*)malloc(sizeof(t_queue));
+    newq->next = NULL;
+    newq->parent = parent ? parent : NULL;
+    newq->room = room;
+    if (*q)
+        curq->next = newq;
+    else
+        *q = newq;
+}
