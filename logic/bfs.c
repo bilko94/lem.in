@@ -36,20 +36,62 @@ void    freeroomids(t_roomids **roomids)
     free(*roomids);
 }
 
+int     search(t_hub *hub, t_routelist *routelist)
+{
+    t_queue     *q;
+    t_roomids   *roomids;
+
+    q = NULL;
+    addtoqueue(&q, NULL, hub->room);
+    printf("queue created\n");
+    while (q && !q->room->end)
+    {
+        printf("checking for end: %d\n", q->room->end);
+        while (q->room->links && q->room->links->next)
+        {
+            if (!q->room->links->visited){
+                addtoqueue(&q, q, q->room->links)
+                pritnf("added %d to queue\n", q->room->id);
+            }
+            q->room->links = q->room->links->next;
+        }
+        if (!q->room->end)
+            break ;
+        q = q->next;
+    }
+    if (!q->room->end)
+    {
+        freequeue(&q, NULL, &(routelist->route));
+        return (0);
+    }
+    roomids = NULL;
+    while (q->parent)
+    {
+        addroomid(q->room->id, &roomids);
+        q = q->parent;
+    }
+    addroomid(q->room->id, &roomids);
+    freequeue(&q, roomids, &(routelist->route));
+    freeroomids(&roomids);
+    return 1;
+}
+
 int     bfs(t_hub *hub)
 {
-    int     i;
-    t_room   *room;
+    int             i;
+    t_routelist     *routelist;
 
     i = 0;
     while(1)
     {
-        addroomnode(&hub->room, ++i);
-        room = hub->room;
-        while (room->next)
-            room = room->next;
-        if (!search(hub, room))
+        addroutelistnode(&hub->routelist, ++i);
+        printf("added first node for routelist\n")
+        routelist = hub->routelist;
+        while (routelist->next)
+            routelist = routelist->next;
+        printf("search\n");
+        if (!search(hub, routelist))
             break;
     }
-    
+    printf("Route creation error\n");
 }

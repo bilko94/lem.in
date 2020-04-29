@@ -42,6 +42,14 @@ typedef struct			s_network
 	int					end;
 }						t_network;
 
+typedef struct			s_routelist
+{
+	int					id;
+	int					ants;
+	struct s_route		*route;
+	struct s_routelist	*next;
+}						s_routelist;
+
 typedef struct		s_room
 {
 	int				id;
@@ -58,10 +66,16 @@ typedef struct		s_room
 
 typedef struct		s_queue
 {
-	struct s_room	*node;
+	struct s_room	*room;
 	struct s_queue	*parent;
 	struct s_queue	*next;
 }					t_queue;
+
+typedef	struct		s_route
+{
+	struct s_room	*room;
+	struct s_route	*next;
+}					t_route;
 
 typedef struct		s_link
 {
@@ -75,6 +89,7 @@ typedef struct		s_hub
 	t_room			*room;
 	t_network		*network;
 	t_queue			*queue;
+	t_routelist		*routelist;
 	t_rd			*raw_data;
 	int				room_count;
 	int				ant_count;
