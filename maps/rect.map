@@ -1,0 +1,13 @@
+5
+##start
+rm1 3 1
+rm2 3 2
+rm3 2 2
+rm4 1 2
+##end
+rm5 1 1
+rm1-rm2
+rm2-rm3
+rm3-rm4
+rm4-rm5
+rm1-rm5
