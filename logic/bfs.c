@@ -51,14 +51,17 @@ int     search(t_hub *hub, t_routelist *routelist)
         {
             printf("visited current room?: %d\n", q->room->visited);
             printf("visited linked room?: %d\n", q->room->links->linked_room->visited);
+            printf("room id: %d -- visited?: %d\n", q->room->id, q->room->visited);
             if (!q->room->links->linked_room->visited){
                 addtoqueue(&q, q, q->room->links->linked_room);
                 printf("added %d to queue\n", q->room->id);
             }
             q->room->links = q->room->links->next;
         }
-        if (!q->room->end)
+        if (!q->next || q->room->end){
+            printf("###either end: %d or no next available\n", q->room->end);
             break ;
+        }
         q = q->next;
     }
     printf("after while loop\n");
