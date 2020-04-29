@@ -19,6 +19,7 @@ t_room	*malloc_room(void){
 	
 	if ((room = (t_room*)malloc(sizeof(t_room)))){
 		room->name = NULL;
+		room->id = 0;
 		room->start = 0;
 		room->end = 0;
 		room->x = 0;

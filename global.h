@@ -156,6 +156,7 @@ int		init_build(t_hub **hub);
 void	relink(t_hub *hub);
 int		loop_break(int max);
 
+
 // malloc
 t_hub	*malloc_hub(void);
 t_room	*malloc_room(void);
@@ -193,6 +194,7 @@ t_room	*find_room(t_room *roomlist, char *str);
 int		insert(t_hub *hub);
 int		populate(t_hub *hub, t_rd *data);
 int		write_room(t_room *start, char *line, int pos);
+void	unvisit(t_hub *hub);
 
 // mappers
 void hub_echo(t_hub *hub);
