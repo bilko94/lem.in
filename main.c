@@ -7,6 +7,7 @@ int main(void){
 	printf("done !\n");
 	hub_echo(hub);
 	mapper(hub);
+	bfs(hub);
 	// while(1);
 	purge(hub);
 	return (0);

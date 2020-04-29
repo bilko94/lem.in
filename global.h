@@ -48,7 +48,7 @@ typedef struct			s_routelist
 	int					ants;
 	struct s_route		*route;
 	struct s_routelist	*next;
-}						s_routelist;
+}						t_routelist;
 
 typedef struct		s_room
 {
@@ -166,6 +166,16 @@ void	purge_t_rd(t_rd *raw_data);
 void	purge_t_rooms(t_room *rooms);
 void	purge_t_links(t_link *links);
 int		purge_split(int len, char **split);
+
+//Algorithm stuffs
+int     bfs(t_hub *hub);
+int     search(t_hub *hub, t_routelist *routelist);
+void    addroomid(int id, t_roomids **roomids);
+void    freeroomids(t_roomids **roomids);
+int     addroutelistnode(t_routelist **routelist, int id);
+int	    addroute(t_route **route, t_room *room);
+void    assessqueue(t_queue **q, t_roomids *roomids, t_route **curroute);
+void    addtoqueue(t_queue **q, t_queue *parent, t_room *room);
 
 // onetap
 int		onetap(t_hub *hub);

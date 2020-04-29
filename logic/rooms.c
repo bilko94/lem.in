@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../global.h"
+
 int     addroutelistnode(t_routelist **routelist, int id)
 {
     t_routelist *newnode;
@@ -18,8 +20,8 @@ int     addroutelistnode(t_routelist **routelist, int id)
     curnode = *routelist;
     while (curnode && curnode->next)
         curnode = curnode->next;
-    if (!(newnode = (t_room*)malloc(sizeof(t_roomids))))
-        return (0)
+    if (!(newnode = (t_routelist*)malloc(sizeof(t_routelist))))
+        return (0);
     newnode->id = id;
     newnode->route = NULL;
     newnode->ants = 0;
@@ -31,7 +33,7 @@ int     addroutelistnode(t_routelist **routelist, int id)
     return (1);
 }
 
-void    addroute(t_route **route, t_network *room)
+int    addroute(t_route **route, t_room *room)
 {
     t_route  *curroom;
     t_route  *newroom;
@@ -50,7 +52,7 @@ void    addroute(t_route **route, t_network *room)
     return (1);
 }
 
-void    freequeue(t_queue **q, t_roomids *roomids, t_route **curroute)
+void    assessqueue(t_queue **q, t_roomids *roomids, t_route **curroute)
 {
     t_roomids      *tmpids;
     t_route        *tmproute;
@@ -61,20 +63,20 @@ void    freequeue(t_queue **q, t_roomids *roomids, t_route **curroute)
         while (tmpids && tmpids->next && (tmpids->id != (*q)->room->id))
             tmpids = tmpids->next;
         (*q)->room->visited = 0;
-        if (tmpids && (tmpids->id == (*q)->node->id))
+        if (tmpids && (tmpids->id == (*q)->room->id))
         {
             tmproute = *curroute;
-            while (tmproute && (tmproute->room->id != (*q)->node->id))
+            while (tmproute && (tmproute->room->id != (*q)->room->id))
                 tmproute = tmproute->next;
             if (!tmproute){
                 addroute(curroute, (*q)->room);
-                printf("added route for %d\n", (*q)->room->id)
+                printf("added route for %d\n", (*q)->room->id);
             }
             if (!((*q)->room->start || (*q)->room->end))
-                (*q)->node->visited = 1;
+                (*q)->room->visited = 1;
         }
         if ((*q)->next)
-            freequeue(&((*q)->next), roomids, curroute);
+            assessqueue(&((*q)->next), roomids, curroute);
         free(*q);
         *q = NULL;
     }
