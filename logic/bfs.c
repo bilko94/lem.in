@@ -44,14 +44,16 @@ int     search(t_hub *hub, t_routelist *routelist)
     q = NULL;
     addtoqueue(&q, NULL, hub->room);
     printf("queue created\n");
-    while (q && !q->room->end)
+    while (q && !(q->room->end))
     {
         printf("checking for end: %d\n", q->room->end);
-        while (q->room->links && q->room->links->next)
+        while (q->room->links)
         {
-            if (!q->room->links->visited){
-                addtoqueue(&q, q, q->room->links)
-                pritnf("added %d to queue\n", q->room->id);
+            printf("visited current room?: %d\n", q->room->visited);
+            printf("visited linked room?: %d\n", q->room->links->linked_room->visited);
+            if (!q->room->links->linked_room->visited){
+                addtoqueue(&q, q, q->room->links->linked_room);
+                printf("added %d to queue\n", q->room->id);
             }
             q->room->links = q->room->links->next;
         }
@@ -59,11 +61,14 @@ int     search(t_hub *hub, t_routelist *routelist)
             break ;
         q = q->next;
     }
+    printf("after while loop\n");
     if (!q->room->end)
     {
-        freequeue(&q, NULL, &(routelist->route));
+        printf("q->room->end was false, now running assessqueue for failure\n");
+        assessqueue(&q, NULL, &(routelist->route));
         return (0);
     }
+    printf("after assesqueue on not finding room end\n");
     roomids = NULL;
     while (q->parent)
     {
@@ -71,7 +76,7 @@ int     search(t_hub *hub, t_routelist *routelist)
         q = q->parent;
     }
     addroomid(q->room->id, &roomids);
-    freequeue(&q, roomids, &(routelist->route));
+    assessqueue(&q, roomids, &(routelist->route));
     freeroomids(&roomids);
     return 1;
 }
@@ -85,7 +90,7 @@ int     bfs(t_hub *hub)
     while(1)
     {
         addroutelistnode(&hub->routelist, ++i);
-        printf("added first node for routelist\n")
+        printf("added first node for routelist\n");
         routelist = hub->routelist;
         while (routelist->next)
             routelist = routelist->next;

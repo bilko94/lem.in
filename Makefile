@@ -23,6 +23,7 @@ functions.a : function
 
 function :
 	gcc -c functions/*.c
+	gcc -c logic/*.c
 
 clean :
 	-rm *.a
