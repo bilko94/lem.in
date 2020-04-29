@@ -9,6 +9,7 @@ int insert(t_hub *hub){
 			data = data->next;
 		data = data->next;
 	}
+	unvisit(hub);
 	return (1);
 }
 
@@ -49,4 +50,12 @@ int write_room(t_room *start, char *line, int pos){
 	free(str1[2]);
 	free(str1);
 	return (1);
+}
+
+void unvisit(t_hub *hub){
+	t_room *temp = hub->room;
+	while (temp){
+		temp->visited = 0;
+		temp = temp->next;
+	}
 }
