@@ -82,6 +82,17 @@ void    assessqueue(t_queue **q, t_roomids *roomids, t_route **curroute)
     }
 }
 
+// void    assessqueue(t_queue **q, t_roomids *roomids, t_route **curroute)
+// {
+//     t_roomids   temp;
+//     t_route     tmp;
+
+//     if (q)
+//     {
+//         temp = roomids;
+//     }
+// }
+
 void    addtoqueue(t_queue **q, t_queue *parent, t_room *room)
 {
     t_queue *curq;

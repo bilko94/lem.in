@@ -8,7 +8,7 @@ re :
 
 t :
 	make re
-	./lemin < maps/triagle.map
+	./lemin < maps/diamond.map
 
 tl :
 	make re
