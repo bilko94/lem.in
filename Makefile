@@ -24,6 +24,7 @@ functions.a : function
 function :
 	gcc -c functions/*.c
 	gcc -c logic/*.c
+	gcc -c mover/*.c
 
 clean :
 	-rm *.a

@@ -8,11 +8,11 @@ int main(void){
 		hub_echo(hub);
 		mapper(hub);
 		bfs(hub);
+		mover(hub);
 	} else {
 		printf("fail ;-;\n");
 	}
 	purge(hub);
-	// while(1);
 	return (0);
 }
 

@@ -51,7 +51,6 @@ int     search(t_hub *hub, t_routelist *routelist)
         printf("-->checking for start: %d\n", q->room->start);
         printf("room id: %d -- visited?: %d\n", q->room->id, q->room->visited);
         printf("room links exists: %d\n", q->room->links ? 1:0);
-        hub_echo(hub);
         tmplink = q->room->links;
         while (tmplink)
         {

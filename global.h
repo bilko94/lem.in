@@ -158,4 +158,8 @@ int maxvar(t_hub *hub, char mode);
 int locate_room(int x, int y, t_hub *hub);
 void print_links(t_link *links);
 
+// mover
+void mover(t_hub *hub);
+int channel_count(t_routelist *route);
+
 #endif
