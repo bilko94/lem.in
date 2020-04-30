@@ -10,7 +10,7 @@ int main(void){
 		bfs(hub);
 	} else {
 		printf("fail ;-;\n");
-	} 
+	}
 	purge(hub);
 	// while(1);
 	return (0);
