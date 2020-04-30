@@ -9,6 +9,8 @@ int insert(t_hub *hub){
 			data = data->next;
 		data = data->next;
 	}
+	if (hub->ant_count == -1)
+		return (0);
 	unvisit(hub);
 	return (1);
 }
@@ -18,6 +20,7 @@ int populate(t_hub *hub, t_rd *data){
 	int ref = instruction(line);
 	if (ref == 1){
 		hub->ant_count = ft_atoi(line);
+		return (1);
 	} else if (ref == 2) {
 		if (ft_strcmp(line, "##start") == 0)
 			return write_room(hub->room, data->next->line, 1);

@@ -16,18 +16,22 @@ int			init_build(t_hub **hub){
 	t_rd *data = NULL;
 
 	if (((*hub) = malloc_hub())){
+		printf("reading\n");
 		if (!read_in(&(*hub)->raw_data)){
 			printf("broke at read_in\n");
 			return (0);
 		}
+		printf("oneteping\n");
 		if (!onetap((*hub))){
 			printf("broke at onetep\n");
 			return (0);
 		}
+		printf("inserting\n");
 		if (!insert((*hub))){
 			printf("broke at insert\n");
 			return (0);
 		}
+		printf("onelink\n");
 		if (!onelink((*hub))){
 			printf("broke at onelink\n");
 			return (0);
