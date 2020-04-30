@@ -8,11 +8,11 @@ re :
 
 t :
 	make re
-	./lemin < maps/diamond.map
+	./lemin < maps/visit.map
 
 tl :
 	make re
-	valgrind --leak-check=full ./lemin < maps/test.map
+	valgrind --leak-check=full ./lemin < maps/visit.map
 
 dependencies :
 	cd depend; make;

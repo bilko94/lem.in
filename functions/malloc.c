@@ -8,7 +8,7 @@ t_hub	*malloc_hub(void){
 		new->room = NULL;
 		new->links = NULL;
 		new->room_count = 0;
-		new->ant_count = 0;
+		new->ant_count = -1;
 		new->path_count = 0;
 	}
 	return (new);
