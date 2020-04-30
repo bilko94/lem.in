@@ -12,7 +12,7 @@
 
 #include "../global.h"
 
-void    addroomid(int id, t_roomids **roomids)
+int    addroomid(int id, t_roomids **roomids)
 {
     t_roomids *newnode;
     t_roomids *curnode;
@@ -20,20 +20,15 @@ void    addroomid(int id, t_roomids **roomids)
     curnode = *roomids;
     while (curnode && curnode->next)
         curnode = curnode->next;
-    newnode = (t_roomids*)malloc(sizeof(t_roomids));
+    if (!(newnode = (t_roomids*)malloc(sizeof(t_roomids))))
+        return (0);
     newnode->id = id;
     newnode->next = NULL;
     if (*roomids)
         curnode->next = newnode;
     else
         *roomids = newnode;
-}
-
-void    freeroomids(t_roomids **roomids)
-{
-    if ((*roomids)->next)
-        freeroomids(&(*roomids)->next);
-    free(*roomids);
+    return (1);
 }
 
 int     search(t_hub *hub, t_routelist *routelist)
@@ -51,7 +46,7 @@ int     search(t_hub *hub, t_routelist *routelist)
         printf("-->checking for start: %d\n", q->room->start);
         printf("room id: %d -- visited?: %d\n", q->room->id, q->room->visited);
         printf("room links exists: %d\n", q->room->links ? 1:0);
-        hub_echo(hub);
+        // hub_echo(hub);
         tmplink = q->room->links;
         while (tmplink)
         {
@@ -87,7 +82,7 @@ int     search(t_hub *hub, t_routelist *routelist)
     }
     addroomid(q->room->id, &roomids);
     assessqueue(&q, roomids, &(routelist->route));
-    freeroomids(&roomids);
+    purge_t_roomids(roomids);
     return 1;
 }
 

@@ -58,7 +58,43 @@ void purge(t_hub *hub){
 			purge_t_rd(hub->raw_data);
 		if (hub->room)
 			purge_t_rooms(hub->room);
+		if (hub->routelist)
+			purge_t_routelist(hub->routelist);
 		free(hub);
+	}
+}
+
+void purge_t_roomids(t_roomids *roomids){
+	printf("purging routelist\n");
+	t_roomids *temp = roomids;
+	t_roomids *next = NULL;
+	while (temp){
+		next = temp->next;
+		free(temp);
+		temp = next;
+	}
+}
+
+void purge_t_queue(t_queue *queue){
+	printf("purging routelist\n");
+	t_queue *temp = queue;
+	t_queue *next = NULL;
+	while (temp){
+		next = temp->next;
+		free(temp);
+		temp = next;
+	}
+}
+
+void purge_t_routelist(t_routelist *routelist){
+	printf("purging routelist\n");
+	t_routelist *temp = routelist;
+	t_routelist *next = NULL;
+	while (temp){
+		next = temp->next;
+		free(temp->route);
+		free(temp);
+		temp = next;
 	}
 }
 

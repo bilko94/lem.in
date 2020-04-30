@@ -112,13 +112,15 @@ void	purge(t_hub *hub);
 void	purge_t_rd(t_rd *raw_data);
 void	purge_t_rooms(t_room *rooms);
 void	purge_t_links(t_link *links);
+void 	purge_t_queue(t_queue *queue);
+void	purge_t_roomids(t_roomids *roomids);
+void 	purge_t_routelist(t_routelist *routelist);
 int		purge_split(int len, char **split);
 
 //Algorithm stuffs
 int     bfs(t_hub *hub);
 int     search(t_hub *hub, t_routelist *routelist);
-void    addroomid(int id, t_roomids **roomids);
-void    freeroomids(t_roomids **roomids);
+int	    addroomid(int id, t_roomids **roomids);
 int     addroutelistnode(t_routelist **routelist, int id);
 int	    addroute(t_route **route, t_room *room);
 void    assessqueue(t_queue **q, t_roomids *roomids, t_route **curroute);
