@@ -40,6 +40,7 @@ int     search(t_hub *hub, t_routelist *routelist)
 {
     t_queue     *q;
     t_roomids   *roomids;
+    t_link      *tmplink;
 
     q = NULL;
     addtoqueue(&q, NULL, hub->room);
@@ -51,15 +52,16 @@ int     search(t_hub *hub, t_routelist *routelist)
         printf("room id: %d -- visited?: %d\n", q->room->id, q->room->visited);
         printf("room links exists: %d\n", q->room->links ? 1:0);
         hub_echo(hub);
-        while (q->room->links)
+        tmplink = q->room->links;
+        while (tmplink)
         {
             printf("->visited current room?: %d\n", q->room->visited);
             printf("->linked room id: %d visited: %d\n", q->room->links->linked_room->id, q->room->links->linked_room->visited);
-            if (!q->room->links->linked_room->visited){
-                addtoqueue(&q, q, q->room->links->linked_room);
+            if (!tmplink->linked_room->visited){
+                addtoqueue(&q, q, tmplink->linked_room);
                 printf("added %d to queue\n", q->room->links->linked_room->id);
             }
-            q->room->links = q->room->links->next;
+            tmplink = tmplink->next;
         }
         printf("you are currently at roomid: %d\n", q->room->id);
         if (!q->next || q->room->end){
