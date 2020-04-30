@@ -3,14 +3,16 @@
 int	instruction(char *line){
 	if (ants(line))
 		return (1);
-	if (start_end(line))
+	if (start(line))
 		return (2);
-	if (comments(line))
+	if (end(line))
 		return (3);
-	if (room(line))
+	if (comments(line))
 		return (4);
-	if (roomlink(line))
+	if (room(line))
 		return (5);
+	if (roomlink(line))
+		return (6);
 	return (0);
 }
 
@@ -25,13 +27,18 @@ int ants(char *line){
 	}
 	return (1);
 }
-int start_end(char *line){
-	if (ft_strcmp(line, "##start") == 0 || ft_strcmp(line, "##end") == 0)
+int start(char *line){
+	if (ft_strcmp(line, "##start") == 0)
+		return (1);
+	return (0);
+}
+int end(char *line){
+	if (ft_strcmp(line, "##end") == 0)
 		return (1);
 	return (0);
 }
 int comments(char *line){
-	if (line[0] == '#' && !start_end(line))
+	if (line[0] == '#' && !start(line) && !end(line))
 		return (1);
 	return (0);
 }

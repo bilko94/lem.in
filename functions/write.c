@@ -5,7 +5,7 @@ int insert(t_hub *hub){
 	while (data){
 		if (!populate(hub, data))
 			return (0);
-		if (instruction(data->line) == 2)
+		if (instruction(data->line) == 2 || instruction(data->line) == 3)
 			data = data->next;
 		data = data->next;
 	}
@@ -21,12 +21,11 @@ int populate(t_hub *hub, t_rd *data){
 	if (ref == 1){
 		hub->ant_count = ft_atoi(line);
 		return (1);
-	} else if (ref == 2) {
-		if (ft_strcmp(line, "##start") == 0)
-			return write_room(hub->room, data->next->line, 1);
-		else if (ft_strcmp(line, "##end") == 0)
-			return write_room(hub->room, data->next->line, -1);
-	} else if (ref == 4){
+	} else if (ref == 2){
+		return write_room(hub->room, data->next->line, 1);
+	} else if (ref == 3){
+		return write_room(hub->room, data->next->line, -1);
+	} else if (ref == 5){
 		return write_room(hub->room, line, 0);
 	}
 }

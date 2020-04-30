@@ -133,7 +133,8 @@ int		build_rooms(t_hub *hub);
 int		instruction(char *line);
 int ants(char *line);
 int comments(char *line);
-int start_end(char *line);
+int start(char *line);
+int end(char *line);
 int room(char *line);
 int roomlink(char *line);
 

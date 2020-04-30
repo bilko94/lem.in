@@ -21,7 +21,7 @@ int			init_build(t_hub **hub){
 			printf("broke at read_in\n");
 			return (0);
 		}
-		printf("oneteping\n");
+		printf("onetaping\n");
 		if (!onetap((*hub))){
 			printf("broke at onetep\n");
 			return (0);

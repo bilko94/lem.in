@@ -4,7 +4,7 @@ int onelink(t_hub *hub){
 	t_rd *data = hub->raw_data;
 
 	while (data){
-		if (instruction(data->line) == 5)
+		if (instruction(data->line) == 6)
 			if (!link_rooms(hub, data->line))
 				return (0);
 		data = data->next;

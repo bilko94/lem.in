@@ -2,14 +2,16 @@
 
 int onetap(t_hub *hub){
 	hub->room_count = count_rooms(hub->raw_data);
-	return build_rooms(hub);
+	if (hub->room_count)
+		return build_rooms(hub);
+	return (0);
 }
 
 int count_rooms(t_rd *data){
 	int i = 0;
 
 	while (data){
-		if (instruction(data->line) == 4)
+		if (instruction(data->line) == 5)
 			i++;
 		data = data->next;
 	}
