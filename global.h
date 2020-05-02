@@ -59,6 +59,7 @@ typedef struct		s_room
 	struct s_link	*links;
 	struct s_room	*next;
 	int				visited;
+	int				ant;
 	int				start;
 	int				end;
 }					t_room;
@@ -116,6 +117,8 @@ void 	purge_t_queue(t_queue *queue);
 void	purge_t_roomids(t_roomids *roomids);
 void 	purge_t_routelist(t_routelist *routelist);
 int		purge_split(int len, char **split);
+void	purge_q(t_queue *queue);
+t_hub	*hub(t_hub *hub);
 
 //Algorithm stuffs
 int     bfs(t_hub *hub);
@@ -146,6 +149,7 @@ int		link_rooms(t_hub *hub, char *line);
 int		connector(t_hub *hub, t_room *room, t_room *next_room);
 t_room	*find_room(t_room *roomlist, char *str);
 
+
 // write
 int		insert(t_hub *hub);
 int		populate(t_hub *hub, t_rd *data);
@@ -159,9 +163,18 @@ void mapper(t_hub *hub);
 int maxvar(t_hub *hub, char mode);
 int locate_room(int x, int y, t_hub *hub);
 void print_links(t_link *links);
+void route_echo(t_route *route);
+
 
 // mover
 void mover(t_hub *hub);
 int channel_count(t_routelist *route);
+t_room	*find_room_by_id(int id, t_hub *hub);
+t_route	*channel_queue(int channel, t_routelist *routelist);
+void	move_channel(t_route *route);
+void	ant_echo();
+void move_ant(t_route *start);
+void start_ant(t_route *start);
+int ant_present();
 
 #endif

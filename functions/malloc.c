@@ -11,6 +11,7 @@ t_hub	*malloc_hub(void){
 		new->ant_count = -1;
 		new->path_count = 0;
 	}
+	hub(new);
 	return (new);
 }
 
@@ -21,6 +22,7 @@ t_room	*malloc_room(void){
 		room->name = NULL;
 		room->id = 0;
 		room->start = 0;
+		room->ant = -1;
 		room->end = 0;
 		room->x = 0;
 		room->y = 0;
@@ -51,6 +53,13 @@ t_rd	*malloc_rd(void){
 	new->next = NULL;
 	return (new);
 }
+
+t_hub *hub(t_hub *hub){
+	static t_hub *int_hub;
+	if (hub)
+		int_hub = hub;
+	return (int_hub);
+};
 
 void purge(t_hub *hub){
 	if (hub){

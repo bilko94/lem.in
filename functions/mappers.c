@@ -78,3 +78,10 @@ void print_links(t_link *links){
 		temp = temp->next;
 	}
 }
+
+void route_echo(t_route *route){
+    while (route){
+        printf("route goes: %d\n",route->room->id);
+	    route = route->next;
+    }
+}
