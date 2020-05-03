@@ -9,6 +9,8 @@ int main(void){
 		// mapper(hub);
 		bfs(hub);
 		echo_data();
+		debug(-1);
+		printf("\n\ninstructions:%d\n\n",mover());
 	} else {
 		printf("fail ;-;\n");
 	}

@@ -11,6 +11,12 @@ tl :
 	make re
 	valgrind --leak-check=full ./lem-in < maps/visit.map
 
+super : re
+	./lem-in < maps/test_big_superposition.map
+
+superleaks : re
+	valgrind --leak-check=full ./lem-in < maps/test_big_superposition.map
+
 dependencies :
 	cd libft; make; make clean;mv libft.a ../
 	cd get_next; make; make clean; mv gnl.a ../

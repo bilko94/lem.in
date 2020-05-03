@@ -70,7 +70,7 @@ void    assessqueue(t_queue **q, t_roomids *roomids, t_route **curroute)
                 tmproute = tmproute->next;
             if (!tmproute){
                 addroute(curroute, (*q)->room);
-                printf("added route for %d\n", (*q)->room->id);
+                // printf("added route for %d\n", (*q)->room->id);
             }
             if (!((*q)->room->start || (*q)->room->end))
                 (*q)->room->visited = 1;
