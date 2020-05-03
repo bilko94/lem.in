@@ -1,7 +1,7 @@
 #include "../global.h"
 
 int mover(){
-	int channels = channel_count(hub(NULL)->routelist);
+	int channels = channel_count();
 	int i = 0;
 	int instructions= 0;
 	if (debug(0)) ft_putchar('\n');
@@ -101,8 +101,9 @@ t_room *find_room_by_id(int id){
 	return (NULL);
 }
 
-int channel_count(t_routelist *route){
+int channel_count(){
 	int i = 0;
+	t_routelist *route = hub(NULL)->routelist;
     while (route){
         route = route->next;
 		if (route)

@@ -175,7 +175,7 @@ void echo_i(int ant, char *room_name);
 
 // mover
 int 	mover();
-int		channel_count(t_routelist *route);
+int		channel_count();
 t_room	*find_room_by_id(int id);
 t_route	*channel_queue(int channel, t_routelist *routelist);
 void	move_channel(t_route *route);
