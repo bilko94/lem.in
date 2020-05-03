@@ -16,15 +16,15 @@ int			init_build(t_hub **hub){
 	t_rd *data = NULL;
 
 	if (((*hub) = malloc_hub())){
-		if (!read_in(&(*hub)->raw_data))
+		if (!read_in())
 			return (0);
-		if (!onetap((*hub)))
+		if (!onetap())
 			return (0);
-		if (!insert((*hub)))
+		if (!insert())
 			return (0);
-		if (!onelink((*hub)))
+		if (!onelink())
 			return (0);
-		relink(((*hub)));
+		relink();
 		return 1;
 	}
 	return 0;

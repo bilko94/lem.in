@@ -1,17 +1,17 @@
 #include "../global.h"
 
-int insert(t_hub *hub){
-	t_rd *data = hub->raw_data;
+int insert(){
+	t_rd *data = hub(0)->raw_data;
 	while (data){
-		if (!populate(hub, data))
+		if (!populate(hub(0), data))
 			return (0);
 		if (instruction(data->line) == 2 || instruction(data->line) == 3)
 			data = data->next;
 		data = data->next;
 	}
-	if (hub->ant_count == -1)
+	if (hub(0)->ant_count == -1)
 		return (0);
-	unvisit(hub);
+	unvisit(hub(0));
 	return (1);
 }
 

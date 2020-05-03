@@ -1,9 +1,9 @@
 #include "../global.h"
 
-int onetap(t_hub *hub){
-	hub->room_count = count_rooms(hub->raw_data);
-	if (hub->room_count)
-		return build_rooms(hub);
+int onetap(){
+	hub(0)->room_count = count_rooms(hub(0)->raw_data);
+	if (hub(0)->room_count)
+		return build_rooms(hub(0));
 	return (0);
 }
 

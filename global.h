@@ -98,10 +98,10 @@ typedef struct		s_hub
 }					t_hub;
 
 // init data
-int		read_in(t_rd **data);
+int		read_in();
 int		add_rd_node(t_rd **data, char *line);
 int		init_build(t_hub **hub);
-void	relink(t_hub *hub);
+void	relink();
 int		loop_break(int max);
 
 
@@ -131,7 +131,7 @@ void    assessqueue(t_queue **q, t_roomids *roomids, t_route **curroute);
 void    addtoqueue(t_queue **q, t_queue *parent, t_room *room);
 
 // onetap
-int		onetap(t_hub *hub);
+int		onetap();
 int		count_rooms(t_rd *data);
 int		build_rooms(t_hub *hub);
 
@@ -145,14 +145,14 @@ int room(char *line);
 int roomlink(char *line);
 
 // link
-int		onelink(t_hub *hub);
+int		onelink();
 int		link_rooms(t_hub *hub, char *line);
 int		connector(t_hub *hub, t_room *room, t_room *next_room);
 t_room	*find_room(t_room *roomlist, char *str);
 
 
 // write
-int		insert(t_hub *hub);
+int		insert();
 int		populate(t_hub *hub, t_rd *data);
 int		write_room(t_room *start, char *line, int pos);
 void	unvisit(t_hub *hub);
