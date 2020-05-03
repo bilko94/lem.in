@@ -3,6 +3,7 @@
 int main(void){
 	t_hub *hub = NULL;
 	clock_t begin = clock();
+	clock_t end = 0;
 
 	if (init_build(&hub)){
 		// printf("done !\n");
@@ -11,7 +12,8 @@ int main(void){
 		bfs(hub);
 		echo_data();
 		debug(-1);
-		printf("\n\ninstructions:%d execution_time:%lf\n\n",mover(), (double)(clock() - begin) / CLOCKS_PER_SEC);
+		end = clock();
+		printf("\n\ninstructions:%d execution_time:%lf sec\n\n",mover(), (double)(end - begin) / CLOCKS_PER_SEC);
 	} else {
 		printf("fail ;-;\n");
 	}
