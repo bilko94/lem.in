@@ -11,10 +11,10 @@ tl :
 	make re
 	valgrind --leak-check=full ./lem-in < maps/visit.map
 
-super : re
+supper : re
 	./lem-in < maps/test_big_superposition.map
 
-superleaks : re
+supperleaks : re
 	valgrind --leak-check=full ./lem-in < maps/test_big_superposition.map
 
 dependencies :
