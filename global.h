@@ -8,8 +8,8 @@
 # define BLUE "[0;34m"
 # define PURPLE "[0;35m"
 # define RESET "[0m"
-# include "depend/libft/libft.h"
-# include "depend/get_next/get_next_line.h"
+# include "libft/libft.h"
+# include "get_next/get_next_line.h"
 # include <unistd.h>
 # include <string.h>
 # include <stdlib.h>
@@ -167,14 +167,16 @@ void route_echo(t_route *route);
 
 
 // mover
-void mover(t_hub *hub);
-int channel_count(t_routelist *route);
-t_room	*find_room_by_id(int id, t_hub *hub);
+int 	mover(t_hub *hub);
+int		channel_count(t_routelist *route);
+t_room	*find_room_by_id(int id);
 t_route	*channel_queue(int channel, t_routelist *routelist);
 void	move_channel(t_route *route);
 void	ant_echo();
-void move_ant(t_route *start);
-void start_ant(t_route *start);
-int ant_present();
+void	move_ant(t_route *start);
+void	start_ant(t_route *start);
+int		ant_present();
+int		debug(int i);
+void	cleanup();
 
 #endif

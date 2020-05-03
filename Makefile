@@ -1,21 +1,19 @@
 all : dependencies functions.a
-	gcc main.c functions.a depend/*.a -o lemin
+	gcc main.c *.a -o lem-in
 
-re :
-	-rm *.a
-	-cd depend; rm *.a
-	make
+re : fclean all
 
 t :
 	make re
-	./lemin < maps/visit.map
+	./lem-in < maps/visit.map
 
 tl :
 	make re
-	valgrind --leak-check=full ./lemin < maps/visit.map
+	valgrind --leak-check=full ./lem-in < maps/visit.map
 
 dependencies :
-	cd depend; make;
+	cd libft; make; make clean;mv libft.a ../
+	cd get_next; make; make clean; mv gnl.a ../
 
 functions.a : function
 	ar rc functions.a *.o
@@ -28,8 +26,6 @@ function :
 
 clean :
 	-rm *.a
-	-cd depend; make clean
 
-fclean :
-	-make clean
-	-rm lemin
+fclean : clean
+	-rm lem-in

@@ -8,7 +8,7 @@ int main(void){
 		hub_echo(hub);
 		mapper(hub);
 		bfs(hub);
-		mover(hub);
+		printf("instructions:%d\n",mover(hub));
 	} else {
 		printf("fail ;-;\n");
 	}
