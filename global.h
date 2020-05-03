@@ -15,6 +15,7 @@
 # include <stdlib.h>
 # include <stdbool.h>
 # include <stdio.h>
+# include <time.h>
 # define EREXIT err()
 
 typedef struct		s_rd
