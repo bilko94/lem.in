@@ -1,16 +1,17 @@
 #include "../global.h"
 
-int mover(t_hub *hub){
-	int channels = channel_count(hub->routelist);
+int mover(){
+	int channels = channel_count(hub(NULL)->routelist);
 	int i = 0;
 	int instructions= 0;
+	if (debug(0)) ft_putchar('\n');
 	t_room *start = find_room_by_id(1);
-	start->ant = hub->ant_count;
+	start->ant = hub(NULL)->ant_count;
 	while (ant_present()){
 		i = channels;
 		while (i--)
-			move_channel(channel_queue(i + 1, hub->routelist));
-		if (debug(0)) printf("\n");
+			move_channel(channel_queue(i + 1, hub(NULL)->routelist));
+		if (debug(0)) ft_putchar('\n');
 		instructions++;
 	}
 	cleanup();
@@ -45,7 +46,7 @@ void move_ant(t_route *start){
 	t_room *next = start->next->room;
 	if (room && next){
 		if (next->ant == -1  || next->end == 1){
-			if (debug(0)) printf("L%d-%s ", room->ant, next->name);
+			if (debug(0)) echo_i(room->ant, next->name);
 			next->ant = room->ant;
 			room->ant = -1;
 		}
@@ -56,7 +57,7 @@ void start_ant(t_route *start){
 	if (start->room->ant > 0){
 		if (start->next->room->ant == -1){
 			start->room->ant--;
-			if (debug(0)) printf("L%d-%s ", (hub(NULL)->ant_count) - (start->room->ant), start->next->room->name);
+			if (debug(0)) echo_i((hub(NULL)->ant_count) - (start->room->ant), start->next->room->name);
 			start->next->room->ant = (hub(NULL)->ant_count) - (start->room->ant);
 		}
 	}

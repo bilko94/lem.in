@@ -114,4 +114,5 @@ int     bfs(t_hub *hub)
         }
         temp = temp->next;
     }
+	printf("instructions:%d\n\n #### debug output finished ####\n\n",mover());
 }

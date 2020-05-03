@@ -165,9 +165,15 @@ int locate_room(int x, int y, t_hub *hub);
 void print_links(t_link *links);
 void route_echo(t_route *route);
 
+void echo_data();
+void echo_start();
+void echo_end();
+void echo_room();
+void echo_links();
+void echo_i(int ant, char *room_name);
 
 // mover
-int 	mover(t_hub *hub);
+int 	mover();
 int		channel_count(t_routelist *route);
 t_room	*find_room_by_id(int id);
 t_route	*channel_queue(int channel, t_routelist *routelist);
