@@ -31,14 +31,24 @@ int    addroomid(int id, t_roomids **roomids)
     return (1);
 }
 
+void	freeroomids(t_roomids **roomids)
+{
+	if ((*roomids)->next)
+		freeroomids(&(*roomids)->next);
+	free(*roomids);
+}
+
 int     search(t_hub *hub, t_routelist *routelist)
 {
     t_queue     *q;
+    t_queue     *freeq;
     t_roomids   *roomids;
     t_link      *tmplink;
 
     q = NULL;
+    hub->queue = q;
     addtoqueue(&q, NULL, hub->room);
+    freeq = q;
     printf("queue created\n");
     while (q && !(q->room->end))
     {
@@ -46,7 +56,6 @@ int     search(t_hub *hub, t_routelist *routelist)
         printf("-->checking for start: %d\n", q->room->start);
         printf("room id: %d -- visited?: %d\n", q->room->id, q->room->visited);
         printf("room links exists: %d\n", q->room->links ? 1:0);
-        // hub_echo(hub);
         tmplink = q->room->links;
         while (tmplink)
         {
@@ -81,9 +90,26 @@ int     search(t_hub *hub, t_routelist *routelist)
         q = q->parent;
     }
     addroomid(q->room->id, &roomids);
-    assessqueue(&q, roomids, &(routelist->route));
-    purge_t_roomids(roomids);
-    return 1;
+    assessqueue(&freeq, roomids, &(routelist->route));
+    // assessqueue(&freeq, NULL, &(routelist->route));
+    freeroomids(&roomids);
+    return (1);
+}
+
+void    poproute(t_routelist *routelist)
+{
+    t_routelist     *prev;
+
+    prev = NULL;
+    while (routelist && routelist->next)
+    {
+        prev = routelist;
+        routelist = routelist->next;
+    }
+    if (routelist)
+        free(routelist);
+    if (prev)
+        prev->next = NULL;
 }
 
 int     bfs(t_hub *hub)
@@ -113,4 +139,5 @@ int     bfs(t_hub *hub)
         }
         temp = temp->next;
     }
+    poproute(hub->routelist);
 }

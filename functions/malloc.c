@@ -7,6 +7,8 @@ t_hub	*malloc_hub(void){
 		new->network = NULL;
 		new->room = NULL;
 		new->links = NULL;
+		new->routelist = NULL;
+		new->queue = NULL;
 		new->room_count = 0;
 		new->ant_count = -1;
 		new->path_count = 0;
@@ -60,6 +62,16 @@ void purge(t_hub *hub){
 			purge_t_rooms(hub->room);
 		if (hub->routelist)
 			purge_t_routelist(hub->routelist);
+		if (hub->queue){
+			printf("hub->queue still exists\n");
+			purge_t_queue(hub->queue);
+		}
+		printf("links: %d\n", hub->links? 1:0);
+		printf("room: %d\n", hub->room? 1:0);
+		printf("network: %d\n", hub->network? 1:0);
+		printf("queue: %d\n", hub->queue? 1:0);
+		printf("routelist: %d\n", hub->routelist? 1:0);
+		printf("raw_data: %d\n", hub->raw_data? 1:0);
 		free(hub);
 	}
 }
@@ -76,7 +88,7 @@ void purge_t_roomids(t_roomids *roomids){
 }
 
 void purge_t_queue(t_queue *queue){
-	printf("purging routelist\n");
+	printf("purging queue\n");
 	t_queue *temp = queue;
 	t_queue *next = NULL;
 	while (temp){
@@ -89,9 +101,16 @@ void purge_t_queue(t_queue *queue){
 void purge_t_routelist(t_routelist *routelist){
 	printf("purging routelist\n");
 	t_routelist *temp = routelist;
+	t_route		*tmp = routelist->route;
+	t_route		*tmpnext = NULL;
 	t_routelist *next = NULL;
 	while (temp){
 		next = temp->next;
+		while (tmp){
+			tmpnext = tmp->next;
+			free(tmp);
+			tmp = tmpnext;
+		}
 		free(temp->route);
 		free(temp);
 		temp = next;

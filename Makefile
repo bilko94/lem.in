@@ -14,6 +14,10 @@ tl :
 	make re
 	valgrind --leak-check=full ./lemin < maps/visit.map
 
+tld :
+	make re
+	valgrind --leak-check=full -v --track-origins=yes ./lemin < maps/visit.map
+
 dependencies :
 	cd depend; make;
 

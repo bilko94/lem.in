@@ -77,7 +77,7 @@ void    assessqueue(t_queue **q, t_roomids *roomids, t_route **curroute)
         }
         if ((*q)->next)
             assessqueue(&((*q)->next), roomids, curroute);
-        free(*q);
+        free((*q));
         *q = NULL;
     }
 }

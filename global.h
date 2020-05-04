@@ -123,6 +123,7 @@ int     search(t_hub *hub, t_routelist *routelist);
 int	    addroomid(int id, t_roomids **roomids);
 int     addroutelistnode(t_routelist **routelist, int id);
 int	    addroute(t_route **route, t_room *room);
+void	freeroomids(t_roomids **roomids);
 void    assessqueue(t_queue **q, t_roomids *roomids, t_route **curroute);
 void    addtoqueue(t_queue **q, t_queue *parent, t_room *room);
 
