@@ -100,3 +100,12 @@ void    addtoqueue(t_queue **q, t_queue *parent, t_room *room)
     else
         *q = newq;
 }
+
+int route_len(t_route *route){
+	int i = 0;
+	while (route){
+		i++;
+		route = route->next;
+	}
+	return (i);
+}

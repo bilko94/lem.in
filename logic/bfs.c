@@ -51,7 +51,7 @@ int     search(t_hub *hub, t_routelist *routelist)
     freeq = q;
     // printf("queue created\n");
     while (q && !(q->room->end))
-    {
+	{
         // printf("-->checking for end: %d\n", q->room->end);
         // printf("-->checking for start: %d\n", q->room->start);
         // printf("room id: %d -- visited?: %d\n", q->room->id, q->room->visited);
@@ -83,8 +83,7 @@ int     search(t_hub *hub, t_routelist *routelist)
     }
     // printf("q->room->end: %d therefore now moving to assessqueue on success\n", q->room->end);
     roomids = NULL;
-    while (q->parent)
-    {
+    while (q->parent){
         addroomid(q->room->id, &roomids);
         // printf("roomid: %d added to id list\n", q->room->id);
         q = q->parent;
