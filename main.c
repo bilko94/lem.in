@@ -6,9 +6,6 @@ int main(void){
 	clock_t end = 0;
 
 	if (init_build(&hub)){
-		// printf("done !\n");
-		// hub_echo(hub);
-		// mapper(hub);
 		bfs(hub);
 		echo_data();
 		debug(-1);
@@ -20,4 +17,3 @@ int main(void){
 	purge(hub);
 	return (0);
 }
-
