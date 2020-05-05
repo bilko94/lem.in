@@ -8,13 +8,14 @@
 # define BLUE "[0;34m"
 # define PURPLE "[0;35m"
 # define RESET "[0m"
-# include "depend/libft/libft.h"
-# include "depend/get_next/get_next_line.h"
+# include "libft/libft.h"
+# include "get_next/get_next_line.h"
 # include <unistd.h>
 # include <string.h>
 # include <stdlib.h>
 # include <stdbool.h>
 # include <stdio.h>
+# include <time.h>
 # define EREXIT err()
 
 typedef struct		s_rd
@@ -59,6 +60,7 @@ typedef struct		s_room
 	struct s_link	*links;
 	struct s_room	*next;
 	int				visited;
+	int				ant;
 	int				start;
 	int				end;
 }					t_room;
@@ -96,10 +98,10 @@ typedef struct		s_hub
 }					t_hub;
 
 // init data
-int		read_in(t_rd **data);
+int		read_in();
 int		add_rd_node(t_rd **data, char *line);
 int		init_build(t_hub **hub);
-void	relink(t_hub *hub);
+void	relink();
 int		loop_break(int max);
 
 
@@ -116,6 +118,8 @@ void 	purge_t_queue(t_queue *queue);
 void	purge_t_roomids(t_roomids *roomids);
 void 	purge_t_routelist(t_routelist *routelist);
 int		purge_split(int len, char **split);
+void	purge_q(t_queue *queue);
+t_hub	*hub(t_hub *hub);
 
 //Algorithm stuffs
 int     bfs(t_hub *hub);
@@ -128,7 +132,7 @@ void    assessqueue(t_queue **q, t_roomids *roomids, t_route **curroute);
 void    addtoqueue(t_queue **q, t_queue *parent, t_room *room);
 
 // onetap
-int		onetap(t_hub *hub);
+int		onetap();
 int		count_rooms(t_rd *data);
 int		build_rooms(t_hub *hub);
 
@@ -142,13 +146,14 @@ int room(char *line);
 int roomlink(char *line);
 
 // link
-int		onelink(t_hub *hub);
+int		onelink();
 int		link_rooms(t_hub *hub, char *line);
 int		connector(t_hub *hub, t_room *room, t_room *next_room);
 t_room	*find_room(t_room *roomlist, char *str);
 
+
 // write
-int		insert(t_hub *hub);
+int		insert();
 int		populate(t_hub *hub, t_rd *data);
 int		write_room(t_room *start, char *line, int pos);
 void	unvisit(t_hub *hub);
@@ -160,5 +165,26 @@ void mapper(t_hub *hub);
 int maxvar(t_hub *hub, char mode);
 int locate_room(int x, int y, t_hub *hub);
 void print_links(t_link *links);
+void route_echo(t_route *route);
+
+void echo_data();
+void echo_start();
+void echo_end();
+void echo_room();
+void echo_links();
+void echo_i(int ant, char *room_name);
+
+// mover
+int 	mover();
+int		channel_count();
+t_room	*find_room_by_id(int id);
+t_route	*channel_queue(int channel, t_routelist *routelist);
+void	move_channel(t_route *route);
+void	ant_echo();
+void	move_ant(t_route *start);
+void	start_ant(t_route *start);
+int		ant_present();
+int		debug(int i);
+void	cleanup();
 
 #endif

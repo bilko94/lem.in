@@ -13,6 +13,7 @@ t_hub	*malloc_hub(void){
 		new->ant_count = -1;
 		new->path_count = 0;
 	}
+	hub(new);
 	return (new);
 }
 
@@ -23,6 +24,7 @@ t_room	*malloc_room(void){
 		room->name = NULL;
 		room->id = 0;
 		room->start = 0;
+		room->ant = -1;
 		room->end = 0;
 		room->x = 0;
 		room->y = 0;
@@ -54,6 +56,13 @@ t_rd	*malloc_rd(void){
 	return (new);
 }
 
+t_hub *hub(t_hub *hub){
+	static t_hub *int_hub;
+	if (hub)
+		int_hub = hub;
+	return (int_hub);
+};
+
 void purge(t_hub *hub){
 	if (hub){
 		if (hub->raw_data)
@@ -66,18 +75,18 @@ void purge(t_hub *hub){
 			printf("hub->queue still exists\n");
 			purge_t_queue(hub->queue);
 		}
-		printf("links: %d\n", hub->links? 1:0);
-		printf("room: %d\n", hub->room? 1:0);
-		printf("network: %d\n", hub->network? 1:0);
-		printf("queue: %d\n", hub->queue? 1:0);
-		printf("routelist: %d\n", hub->routelist? 1:0);
-		printf("raw_data: %d\n", hub->raw_data? 1:0);
+		// printf("links: %d\n", hub->links? 1:0);
+		// printf("room: %d\n", hub->room? 1:0);
+		// printf("network: %d\n", hub->network? 1:0);
+		// printf("queue: %d\n", hub->queue? 1:0);
+		// printf("routelist: %d\n", hub->routelist? 1:0);
+		// printf("raw_data: %d\n", hub->raw_data? 1:0);
 		free(hub);
 	}
 }
 
 void purge_t_roomids(t_roomids *roomids){
-	printf("purging routelist\n");
+	// printf("purging routelist\n");
 	t_roomids *temp = roomids;
 	t_roomids *next = NULL;
 	while (temp){
@@ -88,7 +97,7 @@ void purge_t_roomids(t_roomids *roomids){
 }
 
 void purge_t_queue(t_queue *queue){
-	printf("purging queue\n");
+	// printf("purging routelist\n");
 	t_queue *temp = queue;
 	t_queue *next = NULL;
 	while (temp){
@@ -99,7 +108,7 @@ void purge_t_queue(t_queue *queue){
 }
 
 void purge_t_routelist(t_routelist *routelist){
-	printf("purging routelist\n");
+	// printf("purging routelist\n");
 	t_routelist *temp = routelist;
 	t_route		*tmp = routelist->route;
 	t_route		*tmpnext = NULL;
@@ -118,7 +127,7 @@ void purge_t_routelist(t_routelist *routelist){
 }
 
 void purge_t_rd(t_rd *raw_data){
-	printf("purging rd's\n");
+	// printf("purging rd's\n");
 	t_rd *temp = raw_data;
 	t_rd *next = NULL;
 	while (temp){

@@ -78,3 +78,79 @@ void print_links(t_link *links){
 		temp = temp->next;
 	}
 }
+
+void route_echo(t_route *route){
+    while (route){
+        printf("route goes: %d\n",route->room->id);
+	    route = route->next;
+    }
+}
+
+void echo_data(){
+	ft_putnbr(hub(0)->ant_count);
+	ft_putchar('\n');
+	echo_start();
+	echo_end();
+	echo_room();
+	echo_links();
+	debug(1);
+	mover();
+}
+
+void echo_start(){
+	t_rd *raw_data = hub(0)->raw_data;
+	while (raw_data){
+		if (instruction(raw_data->line) == 2){
+			ft_putstr(raw_data->line);
+			ft_putchar('\n');
+			ft_putstr(raw_data->next->line);
+			ft_putchar('\n');
+			return ;
+		}
+		raw_data = raw_data->next;
+	}
+}
+
+void echo_end(){
+	t_rd *raw_data = hub(0)->raw_data;
+	while (raw_data){
+		if (instruction(raw_data->line) == 3){
+			ft_putstr(raw_data->line);
+			ft_putchar('\n');
+			ft_putstr(raw_data->next->line);
+			ft_putchar('\n');
+			return ;
+		}
+		raw_data = raw_data->next;
+	}
+}
+
+void echo_room(){
+	t_rd *raw_data = hub(0)->raw_data;
+	while (raw_data){
+		if (instruction(raw_data->line) == 5){
+			ft_putstr(raw_data->line);
+			ft_putchar('\n');
+		}
+		raw_data = raw_data->next;
+	}
+}
+
+void echo_links(){
+	t_rd *raw_data = hub(0)->raw_data;
+	while (raw_data){
+		if (instruction(raw_data->line) == 6){
+			ft_putstr(raw_data->line);
+			ft_putchar('\n');
+		}
+		raw_data = raw_data->next;
+	}
+}
+
+void echo_i(int ant, char *room_name){
+	ft_putchar('L');
+	ft_putnbr(ant);
+	ft_putchar('-');
+	ft_putstr(room_name);
+	ft_putchar(' ');
+}

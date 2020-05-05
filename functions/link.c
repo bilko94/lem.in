@@ -1,11 +1,11 @@
 #include "../global.h"
 
-int onelink(t_hub *hub){
-	t_rd *data = hub->raw_data;
+int onelink(){
+	t_rd *data = hub(0)->raw_data;
 
 	while (data){
 		if (instruction(data->line) == 6)
-			if (!link_rooms(hub, data->line))
+			if (!link_rooms(hub(0), data->line))
 				return (0);
 		data = data->next;
 	}
