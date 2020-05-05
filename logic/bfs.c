@@ -124,6 +124,10 @@ int     bfs(t_hub *hub)
         addroutelistnode(&hub->routelist, ++i);
         // printf("added first node for routelist\n");
         routelist = hub->routelist;
+        if (route_len(routelist->route) == 2){
+            printf("route: %d, %d are start: %d and end: %d\n", route->room->id, route->next->room->id, route->room->start, route->room->end);
+            break;
+        }
         while (routelist->next)
             routelist = routelist->next;
         // printf("search\n");
