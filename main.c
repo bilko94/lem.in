@@ -7,10 +7,11 @@ int main(void){
 
 	if (init_build(&hub)){
 		bfs(hub);
-		echo_data();
-		debug(-1);
-		end = clock();
-		printf("\n\ninstructions:%d channels:%d execution_time:%lf sec\n\n",mover(), channel_count(),(double)(end - begin) / CLOCKS_PER_SEC);
+		// echo_data();
+		// debug(-1);
+		// end = clock();
+		// printf("\n\ninstructions:%d channels:%d execution_time:%lf sec\n\n",mover(), channel_count(),(double)(end - begin) / CLOCKS_PER_SEC);
+		printf("debug\n");
 	} else {
 		printf("fail ;-;\n");
 	}
