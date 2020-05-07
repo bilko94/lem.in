@@ -12,8 +12,7 @@
 
 #include "../global.h"
 
-int    addroomid(int id, t_roomids **roomids)
-{
+int    addroomid(int id, t_roomids **roomids){
     t_roomids *newnode;
     t_roomids *curnode;
 
@@ -31,15 +30,13 @@ int    addroomid(int id, t_roomids **roomids)
     return (1);
 }
 
-void	freeroomids(t_roomids **roomids)
-{
+void	freeroomids(t_roomids **roomids){
 	if ((*roomids)->next)
 		freeroomids(&(*roomids)->next);
 	free(*roomids);
 }
 
-int     search(t_hub *hub, t_routelist *routelist)
-{
+int     search(t_hub *hub, t_routelist *routelist){
     t_queue     *q;
     t_queue     *freeq;
     t_roomids   *roomids;
@@ -81,8 +78,7 @@ int     search(t_hub *hub, t_routelist *routelist)
     return (1);
 }
 
-void    poproute(t_routelist *routelist)
-{
+void    poproute(t_routelist *routelist){
     t_routelist     *prev;
 
     prev = NULL;
@@ -97,8 +93,7 @@ void    poproute(t_routelist *routelist)
         prev->next = NULL;
 }
 
-int     bfs(t_hub *hub)
-{
+int     bfs(t_hub *hub){
     int             i;
     int             n;
     t_routelist     *routelist;
@@ -123,3 +118,29 @@ int     bfs(t_hub *hub)
     }
 }
 
+void end_break(){
+	static t_link *end;
+	t_room *start = hub(0)->room;
+	t_link *temp = NULL;
+	t_link *prev = NULL;
+	if (!end){
+		if (start->links->linked_room->end == 1){
+			end = start->links;
+			start->links = end->next;
+		} else {
+			temp = start->links;
+			while (temp){
+				if (temp->linked_room->end == 1){
+					end = temp;
+					prev->next = end->next;
+				}
+				prev = temp;
+				temp = temp->next;
+			}
+		}
+		return ;
+	} else {
+		end->next = start->links;
+		start->links = end;
+	}
+}
