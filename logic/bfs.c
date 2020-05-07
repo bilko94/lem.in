@@ -172,18 +172,20 @@ void end_break(){
 	t_link *temp = NULL;
 	t_link *prev = NULL;
 	if (!end){
-		if (start->links->linked_room->end == 1){
-			end = start->links;
-			start->links = end->next;
-		} else {
-			temp = start->links;
-			while (temp){
-				if (temp->linked_room->end == 1){
-					end = temp;
-					prev->next = end->next;
+		if (start->links){
+			if (start->links->linked_room->end == 1){
+				end = start->links;
+				start->links = end->next;
+			} else {
+				temp = start->links;
+				while (temp){
+					if (temp->linked_room->end == 1){
+						end = temp;
+						prev->next = end->next;
+					}
+					prev = temp;
+					temp = temp->next;
 				}
-				prev = temp;
-				temp = temp->next;
 			}
 		}
         printf("breakpoint\n");
