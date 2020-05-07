@@ -117,6 +117,19 @@ void    poproute(t_routelist *routelist)
         prev->next = NULL;
 }
 
+int     link_count(t_room *room){
+    t_room  *temp;
+    int     i;
+
+    i = 0;
+    temp = room;
+    while (temp->links){
+        i++;
+        temp->links = temp->links->next;
+    }
+    return (i);
+}
+
 int     bfs(t_hub *hub)
 {
     int             i;
@@ -124,16 +137,26 @@ int     bfs(t_hub *hub)
     t_routelist     *routelist;
     t_routelist     *temp;
 	t_route			*temproute;
+    t_room          *infiniteloop;
+
 
     i = 0;
     n = 0;
+    infiniteloop = hub->room;
     while(1){
         addroutelistnode(&hub->routelist, ++i);
         // printf("added first node for routelist\n");
         routelist = hub->routelist;
         if (route_len(routelist->route) == 2){
-            printf("route: %d, %d are start: %d and end: %d\n", routelist->route->room->id, routelist->route->next->room->id, routelist->route->room->start, routelist->route->next->room->end);
-            break;
+            if (link_count(infiniteloop) > 1 && infiniteloop->start){
+                printf("links = %d\n", link_count(hub->room));
+                unlink();
+                infiniteloop = infiniteloop->next;
+            }
+            else {
+                printf("route: %d, %d are start: %d and end: %d\n", routelist->route->room->id, routelist->route->next->room->id, routelist->route->room->start, routelist->route->next->room->end);
+                break;
+            }
         }
         while (routelist->next){
             routelist = routelist->next;
