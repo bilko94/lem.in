@@ -100,18 +100,26 @@ void    poproute(t_routelist *routelist)
 int     bfs(t_hub *hub)
 {
     int             i;
+    int             n;
     t_routelist     *routelist;
     t_routelist     *temp;
 	t_route			*temproute;
 
     i = 0;
-    while(1){
+    n = 0;
+    while(n != 2){
         addroutelistnode(&hub->routelist, ++i);
         routelist = hub->routelist;
+        printf("routelen: %d\n", route_len(routelist->route));
+        if (route_len(routelist->route) == 2){
+            printf("route: %d, %d are start: %d and end: %d\n", routelist->route->room->id, routelist->route->next->room->id, routelist->route->room->start, routelist->route->room->end);
+            break;
+        }
         while (routelist->next)
             routelist = routelist->next;
         if (!search(hub, routelist))
             break;
+        n += 1;
     }
 }
 
