@@ -132,6 +132,7 @@ void    assessqueue(t_queue **q, t_roomids *roomids, t_route **curroute);
 void    addtoqueue(t_queue **q, t_queue *parent, t_room *room);
 int 	route_len(t_route *route);
 int     link_count(t_room *room);
+void	end_break();
 
 // onetap
 int		onetap();
