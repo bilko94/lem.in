@@ -5,6 +5,7 @@ rm2 2 3
 rm3 2 1
 ##end
 rm4 1 2
+rm9 1 2
 rm1-rm2
 rm1-rm3
 rm2-rm4

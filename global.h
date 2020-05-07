@@ -100,7 +100,7 @@ typedef struct		s_hub
 // init data
 int		read_in();
 int		add_rd_node(t_rd **data, char *line);
-int		init_build(t_hub **hub);
+int		init_build();
 void	relink();
 int		loop_break(int max);
 
@@ -130,7 +130,7 @@ int	    addroute(t_route **route, t_room *room);
 void	freeroomids(t_roomids **roomids);
 void    assessqueue(t_queue **q, t_roomids *roomids, t_route **curroute);
 void    addtoqueue(t_queue **q, t_queue *parent, t_room *room);
-int route_len(t_route *route);
+int		route_len(t_route *route);
 
 // onetap
 int		onetap();
@@ -158,6 +158,8 @@ int		insert();
 int		populate(t_hub *hub, t_rd *data);
 int		write_room(t_room *start, char *line, int pos);
 void	unvisit(t_hub *hub);
+int		validate_start_end();
+int		validate_xy(char *x, char *y);
 
 // mappers
 void hub_echo(t_hub *hub);

@@ -108,7 +108,6 @@ void purge_t_queue(t_queue *queue){
 }
 
 void purge_t_routelist(t_routelist *routelist){
-	// printf("purging routelist\n");
 	t_routelist *temp = routelist;
 	t_route		*tmp = NULL;
 	t_route		*tmpnext = NULL;

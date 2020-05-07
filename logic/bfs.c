@@ -110,7 +110,6 @@ int     bfs(t_hub *hub)
         routelist = hub->routelist;
         while (routelist->next)
             routelist = routelist->next;
-		printf("%d\n", i);
         if (!search(hub, routelist))
             break;
     }
