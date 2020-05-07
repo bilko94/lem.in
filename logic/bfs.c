@@ -121,7 +121,7 @@ int     bfs(t_hub *hub)
 
     i = 0;
     n = 0;
-    while(n != 2){
+    while(1){
         addroutelistnode(&hub->routelist, ++i);
         // printf("added first node for routelist\n");
         routelist = hub->routelist;
@@ -135,7 +135,6 @@ int     bfs(t_hub *hub)
         // printf("search\n");
         if (!search(hub, routelist))
             break;
-        n += 1;
     }
     // printf("end of while loop\n");
     temp = hub->routelist;
