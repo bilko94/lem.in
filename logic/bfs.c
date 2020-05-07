@@ -88,6 +88,12 @@ int     search(t_hub *hub, t_routelist *routelist)
         // printf("roomid: %d added to id list\n", q->room->id);
         q = q->parent;
     }
+    // if (q->parent->room->start && q->room->end){
+    //     addroomid(q->room->id, &roomids);
+    //     assessqueue(&freeq, roomids, &(routelist->route));
+    //     freeroomids(&roomids);
+    //     return (0);
+    // }
     addroomid(q->room->id, &roomids);
     assessqueue(&freeq, roomids, &(routelist->route));
     // assessqueue(&freeq, NULL, &(routelist->route));
@@ -125,13 +131,13 @@ int     bfs(t_hub *hub)
         addroutelistnode(&hub->routelist, ++i);
         // printf("added first node for routelist\n");
         routelist = hub->routelist;
-        printf("routelen: %d\n", route_len(routelist->route));
         if (route_len(routelist->route) == 2){
-            printf("route: %d, %d are start: %d and end: %d\n", routelist->route->room->id, routelist->route->next->room->id, routelist->route->room->start, routelist->route->room->end);
+            printf("route: %d, %d are start: %d and end: %d\n", routelist->route->room->id, routelist->route->next->room->id, routelist->route->room->start, routelist->route->next->room->end);
             break;
         }
-        while (routelist->next)
+        while (routelist->next){
             routelist = routelist->next;
+        }
         // printf("search\n");
         if (!search(hub, routelist))
             break;
@@ -140,8 +146,9 @@ int     bfs(t_hub *hub)
     temp = hub->routelist;
     while (temp){
 		temproute = temp->route;
+        printf("routelen: %d\n", route_len(temp->route));
         while (temproute){
-            // printf("route goes: %d\n",temproute->room->id);
+            printf("route goes: %d\n",temproute->room->id);
             temproute = temproute->next;
         }
         temp = temp->next;
