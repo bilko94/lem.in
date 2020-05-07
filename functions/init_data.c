@@ -12,10 +12,9 @@
 
 #include "../global.h"
 
-int			init_build(t_hub **hub){
-	t_rd *data = NULL;
+int			init_build(){
 
-	if (((*hub) = malloc_hub())){
+	if (malloc_hub()){
 		if (!read_in())
 			return (0);
 		if (!onetap())

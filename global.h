@@ -100,7 +100,7 @@ typedef struct		s_hub
 // init data
 int		read_in();
 int		add_rd_node(t_rd **data, char *line);
-int		init_build(t_hub **hub);
+int		init_build();
 void	relink();
 int		loop_break(int max);
 
@@ -159,6 +159,8 @@ int		insert();
 int		populate(t_hub *hub, t_rd *data);
 int		write_room(t_room *start, char *line, int pos);
 void	unvisit(t_hub *hub);
+int		validate_start_end();
+int		validate_xy(char *x, char *y);
 
 // mappers
 void hub_echo(t_hub *hub);

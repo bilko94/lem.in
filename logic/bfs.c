@@ -49,43 +49,28 @@ int     search(t_hub *hub, t_routelist *routelist)
     hub->queue = q;
     addtoqueue(&q, NULL, hub->room);
     freeq = q;
-    // printf("queue created\n");
-    while (q && !(q->room->end))
-	{
-        // printf("-->checking for end: %d\n", q->room->end);
-        // printf("-->checking for start: %d\n", q->room->start);
-        // printf("room id: %d -- visited?: %d\n", q->room->id, q->room->visited);
-        // printf("room links exists: %d\n", q->room->links ? 1:0);
+    while (q && !(q->room->end)){
         tmplink = q->room->links;
-        while (tmplink)
-        {
-            // printf("->visited current room?: %d\n", q->room->visited);
-            // printf("->linked room id: %d visited: %d\n", q->room->links->linked_room->id, q->room->links->linked_room->visited);
+        while (tmplink){
             if (!tmplink->linked_room->visited){
                 addtoqueue(&q, q, tmplink->linked_room);
-                // printf("added %d to queue\n", q->room->links->linked_room->id);
             }
             tmplink = tmplink->next;
         }
-        // printf("you are currently at roomid: %d\n", q->room->id);
         if (!q->next || q->room->end){
-            // printf("###either end: %d or no next available\n", q->room->end);
             break ;
         }
         q = q->next;
     }
-    // printf("after while loop\n");
-    if (!q->room->end)
-    {
-        // printf("q->room->end was false, now running assessqueue for failure\n");
+    if (!q->room->end){
         assessqueue(&q, NULL, &(routelist->route));
+		purge_t_queue(freeq);
+		q = NULL;
         return (0);
     }
-    // printf("q->room->end: %d therefore now moving to assessqueue on success\n", q->room->end);
     roomids = NULL;
     while (q->parent){
         addroomid(q->room->id, &roomids);
-        // printf("roomid: %d added to id list\n", q->room->id);
         q = q->parent;
     }
     // if (q->parent->room->start && q->room->end){
@@ -96,8 +81,9 @@ int     search(t_hub *hub, t_routelist *routelist)
     // }
     addroomid(q->room->id, &roomids);
     assessqueue(&freeq, roomids, &(routelist->route));
-    // assessqueue(&freeq, NULL, &(routelist->route));
     freeroomids(&roomids);
+	purge_t_queue(freeq);
+	freeq = NULL;
     return (1);
 }
 
@@ -145,12 +131,11 @@ int     bfs(t_hub *hub)
     infiniteloop = hub->room;
     while(1){
         addroutelistnode(&hub->routelist, ++i);
-        // printf("added first node for routelist\n");
         routelist = hub->routelist;
         if (route_len(routelist->route) == 2){
             if (link_count(infiniteloop) > 1 && infiniteloop->start){
                 printf("links = %d\n", link_count(hub->room));
-                unlink();
+                // unlink();
                 infiniteloop = infiniteloop->next;
             }
             else {
@@ -178,3 +163,4 @@ int     bfs(t_hub *hub)
     }
 	// printf("instructions:%d\n\n #### debug output finished ####\n\n",mover());
 }
+
