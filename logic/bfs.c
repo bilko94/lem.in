@@ -175,5 +175,38 @@ int     bfs(t_hub *hub)
         }
         temp = temp->next;
     }
+    end_break();
 	// printf("instructions:%d\n\n #### debug output finished ####\n\n",mover());
+}
+
+void end_break(){
+    printf("hey\n");
+    static t_link *end;
+    t_room *start = hub(0)->room;
+    t_link *temp = NULL;
+    t_link *prev = NULL;
+    if (!end){
+        if (start->links){
+            if (start->links->linked_room->end == 1){
+                end = start->links;
+                start->links = end->next;
+            } else {
+                temp = start->links;
+                while (temp){
+                    if (temp->linked_room->end == 1){
+                        end = temp;
+                        prev->next = end->next;
+                    }
+                    prev = temp;
+                    temp = temp->next;
+                }
+            }
+        }
+        printf("breakpoint\n");
+        return ;
+    } else {
+        end->next = start->links;
+        start->links = end;
+    }
+    printf("not breakpoint\n");
 }
