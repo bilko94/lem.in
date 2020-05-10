@@ -5,11 +5,11 @@ re : fclean all
 
 t :
 	make re
-	./lem-in < maps/simple.map
+	./lem-in < maps/tri.map
 
 tl :
 	make re
-	valgrind --leak-check=full ./lem-in < maps/visit.map
+	valgrind --leak-check=full ./lem-in < maps/tri.map
 
 supper : re
 	./lem-in < maps/test_big_superposition.map
