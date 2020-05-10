@@ -5,7 +5,7 @@ re : fclean all
 
 t :
 	make re
-	./lem-in < maps/visit.map
+	./lem-in < maps/simple.map
 
 tl :
 	make re

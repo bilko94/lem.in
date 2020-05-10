@@ -100,47 +100,90 @@ int     bfs(t_hub *hub){
     t_routelist     *temp;
 	t_route			*temproute;
 
-    i = 0;
     n = 0;
-    while(n != 2){
+	i = why();
+    while(1){
         addroutelistnode(&hub->routelist, ++i);
         routelist = hub->routelist;
-        printf("routelen: %d\n", route_len(routelist->route));
-        if (route_len(routelist->route) == 2){
-            printf("route: %d, %d are start: %d and end: %d\n", routelist->route->room->id, routelist->route->next->room->id, routelist->route->room->start, routelist->route->room->end);
-            break;
-        }
         while (routelist->next)
             routelist = routelist->next;
-        if (!search(hub, routelist))
+        if (!search(hub, routelist)){
+			deleteroute();
             break;
-        n += 1;
+		}
     }
+	end_break();
+}
+
+void deleteroute(){
+	t_routelist *temp = hub(0)->routelist;
+	while (temp){
+		if (temp->next){
+			if (!temp->next->route){
+				free(temp->next);
+				temp->next = NULL;
+			}
+		}
+		temp = temp->next;
+	}
+}
+
+int why(){
+	if (end_link()){
+		addroutelistnode(&hub(0)->routelist, 1);
+		addroute(&hub(0)->routelist->route, hub(0)->room);
+		addroute(&hub(0)->routelist->route, end_room());
+		end_break();
+		return (1);
+	}
+	return (0);
+}
+
+t_room *end_room(){
+	t_room *temp = hub(0)->room;
+	while (temp){
+		if (temp->end == 1)
+			return temp;
+		temp = temp->next;
+	}
+	return (NULL);
+}
+
+int end_link(){
+	t_link *links = hub(0)->room->links;
+	while (links){
+		if (links->linked_room->end == 1)
+			return (1);
+		links = links->next;
+	}
+	return (0);
 }
 
 void end_break(){
-	static t_link *end;
-	t_room *start = hub(0)->room;
-	t_link *temp = NULL;
-	t_link *prev = NULL;
-	if (!end){
-		if (start->links->linked_room->end == 1){
-			end = start->links;
-			start->links = end->next;
-		} else {
-			temp = start->links;
-			while (temp){
-				if (temp->linked_room->end == 1){
-					end = temp;
-					prev->next = end->next;
-				}
-				prev = temp;
-				temp = temp->next;
-			}
-		}
-		return ;
-	} else {
-		end->next = start->links;
-		start->links = end;
-	}
+    static t_link *end;
+    t_room *start = hub(0)->room;
+    t_link *temp = NULL;
+    t_link *prev = NULL;
+    if (!end){
+        if (start->links){
+            if (start->links->linked_room->end == 1){
+                end = start->links;
+                start->links = end->next;
+            } else {
+                temp = start->links;
+                while (temp){
+                    if (temp->linked_room->end == 1){
+                        end = temp;
+                        prev->next = end->next;
+                    }
+                    prev = temp;
+                    temp = temp->next;
+                }
+            }
+        }
+        return ;
+    } else {
+        end->next = start->links;
+        start->links = end;
+    }
 }

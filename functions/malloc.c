@@ -72,7 +72,7 @@ void purge(t_hub *hub){
 		if (hub->routelist)
 			purge_t_routelist(hub->routelist);
 		if (hub->queue){
-			printf("hub->queue still exists\n");
+			// printf("hub->queue still exists\n");
 			purge_t_queue(hub->queue);
 		}
 		// printf("links: %d\n", hub->links? 1:0);

@@ -9,6 +9,8 @@ int onelink(){
 				return (0);
 		data = data->next;
 	}
+	if (!end_connect())
+		return (0);
 	return (1);
 }
 
@@ -55,4 +57,25 @@ int connector(t_hub *hub, t_room *room, t_room *next_room){
 		temp->next = new;
 	}
 	return (1);
+}
+
+int end_connect(){
+	t_room * room = hub(0)->room;
+	while (room){
+		if (room->end != 1){
+			if (end_links(room->links))
+				return (1);
+		}
+		room = room->next;
+	}
+	return (0);
+}
+
+int end_links(t_link *links){
+	while (links){
+		if (links->linked_room->end == 1)
+			return (1);
+		links = links->next;
+	}
+	return (0);
 }
