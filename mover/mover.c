@@ -1,25 +1,24 @@
 #include "../global.h"
 
-int mover(){
-	int channels = channel_count();
-	if (channels){
-		int i = 0;
-		int instructions= 0;
-		if (debug(0)) ft_putchar('\n');
-		t_room *start = find_room_by_id(1);
-		start->ant = hub(0)->ant_count;
-		while (ant_present()){
-			i = channels;
-			while (i--)
-				move_channel(channel_queue(i + 1, hub(0)->routelist));
-			if (debug(0)) ft_putchar('\n');
-			instructions++;
-		}
-		cleanup();
-		return (instructions);
-	}
-	return (0);
-}
+// int mover(){
+// 	int channels = channel_count();
+// 	if (channels){
+// 		int i = 0;
+// 		int instructions= 0;
+// 		if (debug(0)) ft_putchar('\n');
+// 		t_room *start = find_room_by_id(1);
+// 		start->ant = hub(0)->ant_count;
+// 		while (ant_present()){
+// 			i = channels;
+// 			while (i--)
+// 				move_channel(channel_queue(i + 1, hub(0)->routelist));
+// 			if (debug(0)) ft_putchar('\n');
+// 			instructions++;
+// 		}
+// 		cleanup();
+// 		return (instructions);
+// 	}
+// }
 
 void move_channel(t_route *route){
 	if (route->next)
@@ -108,9 +107,9 @@ int channel_count(){
 	int i = 0;
 	t_routelist *route = hub(0)->routelist;
     while (route){
-        route = route->next;
 		if (route)
 			i++;
+        route = route->next;
     }
 	return (i);
 }

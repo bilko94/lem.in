@@ -152,6 +152,8 @@ int roomlink(char *line);
 int		onelink();
 int		link_rooms(t_hub *hub, char *line);
 int		connector(t_hub *hub, t_room *room, t_room *next_room);
+int end_links(t_link *links);
+int end_connect();
 t_room	*find_room(t_room *roomlist, char *str);
 
 
@@ -192,4 +194,21 @@ int		ant_present();
 int		debug(int i);
 void	cleanup();
 
+// why
+int why();
+int end_link();
+void echoroute();
+t_room *end_room();
+
+// fuckit
+void deleteroute();
+void routelist_op();
+int route_op(t_route *route);
+int if_valid(t_route *route);
+int push_ants(t_route *route);
+int get_shortest_route();
+void init_ants(t_route *route);
+int present();
+void start_end(int s, int e, int p);
+int no_valid(int ant_amm);
 #endif

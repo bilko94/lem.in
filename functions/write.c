@@ -22,10 +22,16 @@ int populate(t_hub *hub, t_rd *data){
 	int ref = instruction(line);
 	if (ref == 1){
 		hub->ant_count = ft_atoi(line);
+		if (hub->ant_count == 0)
+			return(0);
 		return (1);
 	} else if (ref == 2){
+		if (instruction(data->next->line) != 5)
+			return (0);
 		return write_room(hub->room, data->next->line, 1);
 	} else if (ref == 3){
+		if (instruction(data->next->line) != 5)
+			return (0);
 		return write_room(hub->room, data->next->line, -1);
 	} else if (ref == 5){
 		if (line[0] == 'L')

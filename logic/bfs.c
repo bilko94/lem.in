@@ -139,48 +139,67 @@ int     bfs(t_hub *hub)
     t_routelist     *temp;
 	t_route			*temproute;
 
-    i = 0;
     n = 0;
-    loop = 0;
+	i = why();
     while(1){
         addroutelistnode(&hub->routelist, ++i);
         // printf("added first node for routelist\n");
         routelist = hub->routelist;
-        if (route_len(routelist->route) == 2){
-            if (!loop){
-                end_break();
-                loop = 1;
-            }
-            else {
-                printf("route: %d, %d are start: %d and end: %d\n", routelist->route->room->id, routelist->route->next->room->id, routelist->route->room->start, routelist->route->next->room->end);
-                printf("links = %d\n", link_count(hub->room));
-                break;
-            }
-        }
-        while (routelist->next){
+        while (routelist->next)
             routelist = routelist->next;
-        }
-        // printf("search\n");
-        if (!search(hub, routelist))
+        if (!search(hub, routelist)){
+			deleteroute();
             break;
+		}
     }
-    // printf("end of while loop\n");
-    temp = hub->routelist;
-    while (temp){
-		temproute = temp->route;
-        printf("routelen: %d\n", route_len(temp->route));
-        while (temproute){
-            printf("route goes: %d\n",temproute->room->id);
-            temproute = temproute->next;
-        }
-        temp = temp->next;
-    }
-    end_break();
-	// printf("instructions:%d\n\n #### debug output finished ####\n\n",mover());
+	end_break();
+}
+
+void deleteroute(){
+	t_routelist *temp = hub(0)->routelist;
+	while (temp){
+		if (temp->next){
+			if (!temp->next->route){
+				free(temp->next);
+				temp->next = NULL;
+			}
+		}
+		temp = temp->next;
+	}
+}
+
+int why(){
+	if (end_link()){
+		addroutelistnode(&hub(0)->routelist, 1);
+		addroute(&hub(0)->routelist->route, hub(0)->room);
+		addroute(&hub(0)->routelist->route, end_room());
+		end_break();
+		return (1);
+	}
+	return (0);
+}
+
+t_room *end_room(){
+	t_room *temp = hub(0)->room;
+	while (temp){
+		if (temp->end == 1)
+			return temp;
+		temp = temp->next;
+	}
+	return (NULL);
+}
+
+int end_link(){
+	t_link *links = hub(0)->room->links;
+	while (links){
+		if (links->linked_room->end == 1)
+			return (1);
+		links = links->next;
+	}
+	return (0);
 }
 
 void end_break(){
-    printf("hey\n");
     static t_link *end;
     t_room *start = hub(0)->room;
     t_link *temp = NULL;
@@ -202,11 +221,9 @@ void end_break(){
                 }
             }
         }
-        printf("breakpoint\n");
         return ;
     } else {
         end->next = start->links;
         start->links = end;
     }
-    printf("not breakpoint\n");
 }
