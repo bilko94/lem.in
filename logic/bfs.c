@@ -79,6 +79,7 @@ int     search(t_hub *hub, t_routelist *routelist)
     {
         // printf("q->room->end was false, now running assessqueue for failure\n");
         assessqueue(&q, NULL, &(routelist->route));
+		purge_t_queue(freeq);
         return (0);
     }
     // printf("q->room->end: %d therefore now moving to assessqueue on success\n", q->room->end);
@@ -98,8 +99,11 @@ int     search(t_hub *hub, t_routelist *routelist)
     assessqueue(&freeq, roomids, &(routelist->route));
     // assessqueue(&freeq, NULL, &(routelist->route));
     freeroomids(&roomids);
+	purge_t_queue(freeq);
     return (1);
 }
+
+
 
 void    poproute(t_routelist *routelist)
 {
