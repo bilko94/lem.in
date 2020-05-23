@@ -6,7 +6,7 @@ int main(void){
 	if (init_hub()){
 		bfs(hub(0));
 		echo_data();
-		performance_meter('d');
+		// performance_meter('d');
 	}
 	purge(hub(0));
 	return (0);
