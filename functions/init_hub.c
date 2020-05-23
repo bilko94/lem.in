@@ -24,6 +24,7 @@ int			init_hub(){
 		if (!onelink())
 			return (0);
 		relink();
+		performance_meter('r');
 		return 1;
 	}
 	return 0;

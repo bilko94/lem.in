@@ -14,16 +14,9 @@ int mover(){
 			i++;
 		}
 	}
+	if (!debug(0))
+		performance_meter('m');
 	return (i);
-}
-
-int debug(int i){
-	static int debug_mode = 0;
-	if (i == -1)
-		debug_mode = 0;
-	else if (i == 1)
-		debug_mode = 1;
-	return debug_mode;
 }
 
 int channel_count(){

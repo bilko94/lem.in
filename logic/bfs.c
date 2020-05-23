@@ -157,6 +157,7 @@ int     bfs(t_hub *hub)
 		}
     }
 	end_break();
+    performance_meter('a');
 }
 
 void deleteroute(){

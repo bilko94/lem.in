@@ -133,6 +133,8 @@ void    addtoqueue(t_queue **q, t_queue *parent, t_room *room);
 int 	route_len(t_route *route);
 int     link_count(t_room *room);
 void	end_break();
+void performance_meter(char in_type);
+double move_noprint();
 
 // onetap
 int		onetap();
