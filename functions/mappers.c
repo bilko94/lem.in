@@ -93,9 +93,7 @@ void echo_data(){
 		ft_putchar('\n');
 		raw_data = raw_data->next;
 	}
-	debug(1);
 	mover();
-	debug(-1);
 }
 
 void echo_start(){
