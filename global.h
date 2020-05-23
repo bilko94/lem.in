@@ -100,7 +100,7 @@ typedef struct		s_hub
 // init data
 int		read_in();
 int		add_rd_node(t_rd **data, char *line);
-int		init_build();
+int		init_hub();
 void	relink();
 int		loop_break(int max);
 

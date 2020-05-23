@@ -12,7 +12,7 @@
 
 #include "../global.h"
 
-int			init_build(){
+int			init_hub(){
 
 	if (malloc_hub()){
 		if (!read_in())

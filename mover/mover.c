@@ -1,106 +1,29 @@
 #include "../global.h"
 
-// int mover(){
-// 	int channels = channel_count();
-// 	if (channels){
-// 		int i = 0;
-// 		int instructions= 0;
-// 		if (debug(0)) ft_putchar('\n');
-// 		t_room *start = find_room_by_id(1);
-// 		start->ant = hub(0)->ant_count;
-// 		while (ant_present()){
-// 			i = channels;
-// 			while (i--)
-// 				move_channel(channel_queue(i + 1, hub(0)->routelist));
-// 			if (debug(0)) ft_putchar('\n');
-// 			instructions++;
-// 		}
-// 		cleanup();
-// 		return (instructions);
-// 	}
-// }
-
-void move_channel(t_route *route){
-	if (route->next)
-		if (route->next->next)
-			move_channel(route->next);
-	if (route->room->id == 1){
-		start_ant(route);
-	} else if (route->room->ant != -1){
-		move_ant(route);
-	}
-}
-
-int ant_present(){
-	t_room *start = hub(0)->room;
-	if (start->ant == hub(0)->ant_count)
-		return (1);
-	while (start){
-		if (start->ant != -1 && start->start != 1 && start->end != 1)
-			return (1);
-		start = start->next;
-	}
-	return (0);
-}
-
-void move_ant(t_route *start){
-	t_room *room = start->room;
-	t_room *next = start->next->room;
-	if (room && next){
-		if (next->ant == -1  || next->end == 1){
-			if (debug(0)) echo_i(room->ant, next->name);
-			next->ant = room->ant;
-			room->ant = -1;
+int mover(){
+	if (debug(0))
+		ft_putchar('\n');
+	int i = 0;
+	if (channel_count()){
+		int ant = 0;
+		hub(0)->room->ant = hub(0)->ant_count;
+		while (hub(0)->room->ant > 0 || present()){
+			routelist_op();
+			if (debug(0))
+				ft_putchar('\n');
+			i++;
 		}
 	}
+	return (i);
 }
 
-void start_ant(t_route *start){
-	if (start->room->ant > 0){
-		if (start->next->room->ant == -1){
-			start->room->ant--;
-			if (debug(0)) echo_i((hub(0)->ant_count) - (start->room->ant), start->next->room->name);
-			start->next->room->ant = (hub(0)->ant_count) - (start->room->ant);
-		}
-	}
-}
-
-void ant_echo(){
-	t_room *start = hub(0)->room;
-	while (start){
-		if (start->ant != -1)
-			printf("room %d ant:%d\n", start->id, start->ant);
-		start = start->next;
-	}
-}
-
-void cleanup(){
-	t_room *start = hub(0)->room;
-	while (start){
-		start->ant = -1;
-		start = start->next;
-	}
-}
-
-t_route *channel_queue(int channel, t_routelist *routelist){
-	int channel_num = 0;
-	while (routelist){
-		channel_num++;
-		if (channel == channel_num)
-			return routelist->route;
-		routelist = routelist->next;
-	}
-	return (NULL);
-}
-
-t_room *find_room_by_id(int id){
-	t_room *temp = hub(0)->room;
-	while (temp){
-		if (temp->id == id)
-			return (temp);
-		temp = temp->next;
-	}
-	return (NULL);
+int debug(int i){
+	static int debug_mode = 0;
+	if (i == -1)
+		debug_mode = 0;
+	else if (i == 1)
+		debug_mode = 1;
+	return debug_mode;
 }
 
 int channel_count(){
@@ -114,11 +37,116 @@ int channel_count(){
 	return (i);
 }
 
-int debug(int i){
-	static int debug_mode = 0;
-	if (i == -1)
-		debug_mode = 0;
-	else if (i == 1)
-		debug_mode = 1;
-	return debug_mode;
+void routelist_op(){
+	t_routelist *routes = hub(0)->routelist;
+	while (routes){
+		route_op(routes->route);
+		init_ants(routes->route);
+		routes = routes->next;
+	}
+}
+
+int route_op(t_route *route){
+	if (route){
+		route_op(route->next);
+		if (route->room->ant != -1 && route->room->start != 1 && route->next){
+			if (route->next->room->end == 1 || route->next->room->ant == -1){
+				if (debug(0))
+					echo_i(route->room->ant,route->next->room->name);
+				// printf("L%d-%s ", route->room->ant, route->next->room->name);
+				if (route->next->room->end == 1)
+					start_end(0,1,0);
+				route->next->room->ant = route->room->ant;
+				route->room->ant = -1;
+			}
+		}
+	}
+}
+
+void init_ants(t_route *route){
+	int ants_available = hub(0)->room->ant;
+	int scheduled_ant = (hub(0)->ant_count) - (route->room->ant);
+	
+	int routelen = route_len(route);
+	int route_short = routelen == 2 ? 1 : 0;
+	int shortest_route = get_shortest_route();
+	if (ants_available){
+		if (routelen < hub(0)->ant_count || route_short){
+			push_ants(route);
+		} else if (!no_valid(ants_available)){
+			push_ants(route);
+		} else {
+		}
+	}
+}
+
+int get_shortest_route(){
+	t_routelist *routes = hub(0)->routelist;
+	if (routes)
+		return (route_len(routes->route));
+}
+
+int if_valid(t_route *route){
+	if (route){
+		if (route_len(route) <= route->room->ant * 0.5)
+			return(1);
+	}
+	return (0);
+}
+
+int no_valid(int ant_amm){
+	t_routelist *temp = hub(0)->routelist;
+	while (temp->next){
+		if (route_len(temp->route) <= ant_amm * 0.5)
+			return (1);
+		temp = temp->next;
+	}
+	return (0);
+}
+
+int push_ants(t_route *route){
+	if (route->next->room->end == 1 || route->next->room->ant == -1){
+		route->room->ant--;
+		route->next->room->ant = (hub(0)->ant_count) - (route->room->ant);
+		start_end(1,0,0);
+		if (debug(0))
+			echo_i(route->next->room->ant,route->next->room->name);
+		if (route->next->room->end == 1)
+			start_end(0,1,0);
+	}
+}
+
+void echoroute(){
+	t_routelist *temp = hub(0)->routelist;
+	while (temp){
+		temp = temp->next;
+	}
+}
+
+void start_end(int s, int e, int p){
+	static int start;
+	static int end;
+	if (e){
+		if (!end)
+			end = 1;
+		else
+			end++;
+	} else if (s) {
+		if (!start)
+			start = 1;
+		else
+			start++;
+	} else if (p) {
+		printf("start : %d end : %d\n", start, end);
+	}
+}
+
+int present(){
+	t_room *room = hub(0)->room;
+	while (room){
+		if (room->end != 1 && room->start != 1 && room->ant != -1)
+			return (1);
+		room = room->next;
+	}
+	return (0);
 }

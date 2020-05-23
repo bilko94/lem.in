@@ -87,21 +87,15 @@ void route_echo(t_route *route){
 }
 
 void echo_data(){
-	// ft_putnbr(hub(0)->ant_count);
-	// ft_putchar('\n');
-	// echo_start();
-	// echo_end();
-	// echo_room();
-	// echo_links();
-	// // debug(1);
-	// ft_putchar('\n');
 	t_rd *raw_data = hub(0)->raw_data;
 	while (raw_data){
 		ft_putstr(raw_data->line);
 		ft_putchar('\n');
 		raw_data = raw_data->next;
 	}
+	debug(1);
 	mover();
+	debug(-1);
 }
 
 void echo_start(){
