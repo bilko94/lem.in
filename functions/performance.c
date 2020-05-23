@@ -27,10 +27,10 @@ void performance_meter(char in_type){
         double t_move = (double)(move_done_static - begin_static) / CLOCKS_PER_SEC;
         double t_done = (double)(in - begin_static) / CLOCKS_PER_SEC;
         printf("\ninstructions:%d channels:%d \n",mover(), channel_count());
-        printf("\nread %lf\tdelta t : %lf ms", t_read, t_read);
-        printf("\nalgo %lf\tdelta t : %lf ms", t_algo, t_algo - t_read);
-        printf("\nmove %lf\tdelta t : %lf ms\nmove (no insctruction echo) delta t : %lf ms", t_move, t_move - t_algo, move_noprint());
-        printf("\ntotal execution time: %lf ms\n", t_done);
+        printf("\nread %lf\tdelta t : %lf s", t_read, t_read);
+        printf("\nalgo %lf\tdelta t : %lf s", t_algo, t_algo - t_read);
+        printf("\nmove %lf\tdelta t : %lf s\nmove (no insctruction echo) delta t : %lf s", t_move, t_move - t_algo, move_noprint());
+        printf("\ntotal execution time: %lf s\n", t_done);
     }
 }
 
